@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import TableCell from "../TableCell/TableCell";
 import Button from "../Button/Button";
 import { RiEdit2Fill } from "react-icons/ri";
+import { TransportContext } from "../../TransportContext/TransportContext";
 
 
-const BodyTable = ({ data, carrierIcons, onEdit }) => {
+const BodyTable = ({ carrierIcons, data, onEdit }) => {
   
   
 
@@ -13,15 +14,15 @@ const BodyTable = ({ data, carrierIcons, onEdit }) => {
       {data.map((transport) => (
         <tr key={transport.id}>
           <TableCell>
-              {transport.date}
+              {transport.Date}
           </TableCell>
-          <TableCell>{transport.carrier}</TableCell>
-          <TableCell>{transport.transportNumber}</TableCell>
-          <TableCell>{transport.tractorNumber}</TableCell>
-          <TableCell>{transport.trailerNumber}</TableCell>
+          <TableCell>{transport.Carrier || 'N/A'}</TableCell>
+          <TableCell>{transport.Carrier_Number || 'N/A'}</TableCell>
+          <TableCell>{transport.License_Truck || 'N/A'}</TableCell>
+          <TableCell>{transport.License_Trailer || 'N/A'}</TableCell>
           {/* <TableCell>{transport.hour}</TableCell> */}
-          <TableCell isButton>{transport.status}</TableCell>
-          <TableCell>{transport.pager}</TableCell>
+          <TableCell isButton>{transport.Status || 'N/A'}</TableCell>
+          <TableCell>{transport.Pager || 'N/A'}</TableCell>
           
             <Button onClick={() => onEdit(transport)}><RiEdit2Fill /></Button>
           

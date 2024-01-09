@@ -1,76 +1,69 @@
 import React, { useContext, useEffect, useState } from "react";
 import TablesBig from "../../components/TablesBig/TablesBig";
 import Modal from "../../components/Modal/Modal";
-import CarrierIcon from "../../components/CarrierIcon/CarrierIcon";
 import Form from "../../components/Form/Form";
 import Title from "../../components/Title/Title";
 import Input from "../../components/Input/Input";
 import { FaTruck } from "react-icons/fa6";
 import Button from "../../components/Button/Button";
-import { createRecord } from "../../services/api.js";
+import { createRecord, getRecords } from "../../services/api.js";
 import { listCarriers } from "../../data/listCarriers";
 import { TransportContext } from "../../TransportContext/TransportContext";
 
 const ListTransport = () => {
   //setState
   const [showModal, setShowModal] = useState(false);
-  const {data, setData, isLoading, setRefresh} = useContext(TransportContext);
- 
-  const [newData, setNewData] = useState({
-    Status: "",
-    Carrier: "DHL",
-    ["Carrier number"]: "",
-    ["License truck"]: "",
-    ["License trailer"]: "",
-    Pager: "",
-  });
-  //column names
+  const { setData, data } = useContext(TransportContext);
+  const [formValues, setFormValues] = useState({});
+
+  console.log(setData);
+  console.log(data);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const records = await getRecords("app1pZi9VU5pPRXs9", "Transport");
+      setData(records);
+    };
+    fetchData();
+  }, []);
+
   const columns = [
     { label: "Date" },
     { label: "Carrier" },
-    { label: "Carrier number" },
-    { label: "License truck" },
-    { label: "License trailer" },
+    { label: "Carrier Number" },
+    { label: "Licens Truck" },
+    { label: "License Trailer" },
     // { label: "Hour" },
     { label: "Status" },
     { label: "Pager" },
   ];
-  
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-    setNewData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  const handleSave = () => {
-    const currentDate = new Date();
 
-    const updatedData = {
-      ...newData,
+  const handleInputChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSave = async () => {
+    const recordToSave = {
+      ...formValues,
       Status: "Waiting",
     };
 
-    setNewData(updatedData);
-
-    createRecord("app1pZi9VU5pPRXs9", "Transport", updatedData).then(
-      (record) => {
-        // const newData = [...data, record];
-        setData(prevData => [...prevData, record]);
-        setShowModal(false);
-        setRefresh(prev => !prev); //refresh data
-      }
-    );
+    await createRecord("app1pZi9VU5pPRXs9", "Transport", recordToSave);
+    // Po zapisaniu danych, zamknij modal i odśwież dane
+    setShowModal(false);
+    const records = await getRecords("app1pZi9VU5pPRXs9", "Transport");
+    setData(records);
   };
 
   return (
     <>
       <TablesBig
         nameTable="List of truck"
-        isLoading={isLoading}
+        // isLoading={isLoading}
         columns={columns}
-        data={data}
         addTranck={() => setShowModal(true)}
       />
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
@@ -78,7 +71,7 @@ const ListTransport = () => {
           <Title tag="h4">Additing new track</Title>
           <Input
             type="select"
-            name="carrier"
+            name="Carrier"
             icon={FaTruck}
             label="Carrier"
             options={listCarriers.map((carrier) => carrier.carrier)}
@@ -86,28 +79,28 @@ const ListTransport = () => {
           />
           <Input
             type="text"
-            name="transportNumber"
+            name="Carrier_Number"
             icon={FaTruck}
             label="Carrier Number"
             onChange={handleInputChange}
-          /> 
-           <Input
+          />
+          <Input
             type="text"
-            name="tractorNumber"
+            name="License_Truck"
             icon={FaTruck}
             label="License Truck"
             onChange={handleInputChange}
           />
           <Input
             type="text"
-            name="trailerNumber"
+            name="License_Trailer"
             icon={FaTruck}
             label="License Trailer"
             onChange={handleInputChange}
           />
           <Input
             type="text"
-            name="pager"
+            name="Pager"
             icon={FaTruck}
             label="Number of pager"
             onChange={handleInputChange}

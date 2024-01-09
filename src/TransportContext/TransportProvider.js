@@ -7,6 +7,7 @@ export const TransportProvider = ({ children }) => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [editData, setEditData] = useState(null);
 
     useEffect(() => {
         setIsLoading(true); 

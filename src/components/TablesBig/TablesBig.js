@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Title from "../Title/Title";
 import HeaderTable from "../HeaderTable/HeaderTable";
 import BodyTable from "../BodyTable/BodyTable";
@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 import EditForm from "../EditForm/EditForm";
 import Box from "../Box/Box";
 import Loading from "../Loading/Loading";
+import { TransportContext } from "../../TransportContext/TransportContext";
 
-const TablesBig = ({ nameTable, columns, data, addTranck, carrierIcons, isLoading }) => {
+const TablesBig = ({ nameTable, columns, addTranck, carrierIcons, isLoading }) => {
   
   const [editData, setEditData] = useState(null);
   const navigate = useNavigate();
+  const { data } = useContext(TransportContext);
 
   const handleEdit = (transport) => {
     navigate(`/listTransport/${transport.id}`, { state: { editData: transport } });

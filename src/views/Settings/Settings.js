@@ -34,6 +34,7 @@ const Setting = () => {
           <h1 className="text-2xl font-bold mb-4">Settings</h1>
           {sections.map((section) => (
               <button
+              key={section.id}
               className={`w-full text-left py-2 px-4 rounded font-bold ${
                 activeSection === section.id ? " text-gray-700" : "font-medium"
               }`}

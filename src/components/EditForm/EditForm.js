@@ -21,59 +21,58 @@ import { TransportContext } from "../../TransportContext/TransportContext";
 
 
 
-const EditForm = () => {
+const EditForm = ({data}) => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const {setData, data,  setRefresh } = useContext(TransportContext);
-  const handleChange = (e) => {
-    setData(prevData =>({
-      ...prevData, [e.target.name]: e.target.value,
-    }))
-  }
+  // const {setData,  setRefresh } = useContext(TransportContext);
+  // const handleChange = (e) => {
+  //   setData(prevData =>({
+  //     ...prevData, [e.target.name]: e.target.value,
+  //   }))
+  // }
 
-  const handlePrint = (data) => {
-    setLoading(true);
-    const doc = generatePdf(data);
-    doc.output("dataurlnewwindow"); // Open PDF in a new window
+  // const handlePrint = (data) => {
+  //   setLoading(true);
+  //   const doc = generatePdf(data);
+  //   doc.output("dataurlnewwindow"); // Open PDF in a new window
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
   
-  const handleSave = async(data) => {
+  // const handleSave = async(data) => {
     
-      try {
-        for(let key in data){
-        if(data[key] === undefined || data[key] === null){
-          console.log(`Field ${key} is ${data[key]}`);
-        }
-      }
-      await updateRecord('app1pZi9VU5pPRXs9', 'Transport', data.id, data);
-          refreshData();
-      }catch(e){
-        console.error('Failed to update record:', e)
-      }
-  }
+  //     try {
+  //       for(let key in data){
+  //       if(data[key] === undefined || data[key] === null){
+  //         console.log(`Field ${key} is ${data[key]}`);
+  //       }
+  //     }
+  //     await updateRecord('app1pZi9VU5pPRXs9', 'Transport', data.id, data);
+  //         refreshData();
+  //     }catch(e){
+  //       console.error('Failed to update record:', e)
+  //     }
+  // }
 
-  const refreshData = async () => {
-    setLoading(true);
-    try {
-      const records = await getRecords('baseId', 'tableName');
-      setData(records);
-    } catch (error) {
-      console.error('Failed to refresh data:', error);
-    }
-    setLoading(false);
-  };
+  // const refreshData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const records = await getRecords('baseId', 'tableName');
+  //     setData(records);
+  //   } catch (error) {
+  //     console.error('Failed to refresh data:', error);
+  //   }
+  //   setLoading(false);
+  // };
 
-  const handleDelete = async (recordId) => {
-    try{
-      await deleteRecord('app1pZi9VU5pPRXs9', 'Transport', recordId);
-      setRefresh(prev => !prev);
-    }catch(e){
-      console.log('Failed to delete record:', e);
-    }
-  }
-  console.log(data)
+  // const handleDelete = async (recordId) => {
+  //   try{
+  //     await deleteRecord('app1pZi9VU5pPRXs9', 'Transport', recordId);
+  //     setRefresh(prev => !prev);
+  //   }catch(e){
+  //     console.log('Failed to delete record:', e);
+  //   }
+  // }
 
   return (
     <Box>
@@ -91,8 +90,8 @@ const EditForm = () => {
                         icon={FaTruck}
                         name="carrier"
                         label="Carrier"
-                        value={data.carrier}
-                        onChange={handleChange}
+                        value={data ? data.Carrier : ""}
+                        // onChange={handleChange}
                       
                       />
                     </div>
@@ -102,8 +101,8 @@ const EditForm = () => {
                         icon={FaTruck}
                         name="transportNumber"
                         label="Transport number"
-                        value={data.transportNumber}
-                        onChange={handleChange}
+                        value={data ? data.transportNumber : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                     <div className="my-4 mx-2">
@@ -112,8 +111,8 @@ const EditForm = () => {
                         icon={FaPager}
                         name="pager"
                         label="Pager"
-                        value={data.pager}
-                        onChange={handleChange}
+                        value={data ? data.Pager : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -124,8 +123,8 @@ const EditForm = () => {
                         icon={FaTruckFront}
                         name="tractorNumber"
                         label="License truck"
-                        value={data.tractorNumber}
-                        onChange={handleChange}
+                        value={data ? data.tractorNumber : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                     <div className="my-4 mx-2">
@@ -134,8 +133,8 @@ const EditForm = () => {
                         icon={FaTrailer}
                         name="trailerNumber"
                         label="License trailer"
-                        value={data.trailerNumber}
-                        onChange={handleChange}
+                        value={data ? data.trailerNumber : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -149,8 +148,8 @@ const EditForm = () => {
                         icon={LiaPalletSolid}
                         name="pallets"
                         label="Number of pallets"
-                        value={data.pallets}
-                        onChange={handleChange}
+                        value={data ? data.pallets : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                     <div className="my-4 mx-2">
@@ -159,8 +158,8 @@ const EditForm = () => {
                         icon={FaTruck}
                         name="seal"
                         label="Seal"
-                        value={data.seal}
-                        onChange={handleChange}
+                        value={data ? data.seal : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                     <div className="my-4 mx-2">
@@ -180,8 +179,8 @@ const EditForm = () => {
                         icon={PiPackage}
                         name="package"
                         label="Number of packages"
-                        value={data.package}
-                        onChange={handleChange}
+                        value={data ? data.package : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                     <div className="my-4 mx-2">
@@ -190,8 +189,8 @@ const EditForm = () => {
                         icon={GiWeight}
                         name="weight"
                         label="Weight"
-                        value={data.weight}
-                        onChange={handleChange}
+                        value={data ? data.weight : ""}
+                        // onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -201,8 +200,8 @@ const EditForm = () => {
                       tag="textarea"
                       name="message"
                       label="Message"
-                      value={data.message}
-                      onChange={handleChange}
+                      value={data ? data.message : ''}
+                      // onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -211,21 +210,21 @@ const EditForm = () => {
               <div className="flex w-full">
               <Button
                   bg="bg-green-700"
-                  onClick={() => handleSave(data)}
+                  // onClick={() => handleSave(data)}
                   className="grow mx-3 mt-4"
                 >
                   Save
                 </Button>
                 <Button
                   bg="bg-sky-700"
-                  onClick={() => handlePrint(data)}
+                  // onClick={() => handlePrint(data)}
                   className="grow mx-3 mt-4"
                 >
                   Print
                 </Button>
                 <Button
                   bg="bg-red-700"
-                  onClick={() => handleDelete(data.id)}
+                  // onClick={() => handleDelete(data.id)}
                   className="grow mx-3 mt-4"
                 >
                   Delate

@@ -6,7 +6,7 @@ const Modal = ({isOpen, onClose, children}) => {
   return (
     <div
       role="alert"
-      className="my-12 absolute top-0 bottom-0 left-0 right-0 z-10 transition ease-in-out duration-150 container mx-auto w-11/12 md:w-2/3 max-w-lg "
+      className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 transition ease-in-out duration-150 container mx-auto w-11/12 md:w-2/3 max-w-lg "
     >
         <div className="relative py-8 px-5 md:px-10 bg-white dark:bg-slate-850 rounded-lg shadow-lg border border-gray">
             <div className="w-full flex justify-start text-gray mb-3">
