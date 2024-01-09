@@ -31,13 +31,13 @@ const EditForm = ({data}) => {
   //   }))
   // }
 
-  // const handlePrint = (data) => {
-  //   setLoading(true);
-  //   const doc = generatePdf(data);
-  //   doc.output("dataurlnewwindow"); // Open PDF in a new window
+  const handlePrint = (data) => {
+    setLoading(true);
+    const doc = generatePdf(data);
+    doc.output("dataurlnewwindow"); // Open PDF in a new window
 
-  //   setLoading(false);
-  // };
+    setLoading(false);
+  };
   
   // const handleSave = async(data) => {
     
@@ -217,7 +217,7 @@ const EditForm = ({data}) => {
                 </Button>
                 <Button
                   bg="bg-sky-700"
-                  // onClick={() => handlePrint(data)}
+                  onClick={() => handlePrint(data)}
                   className="grow mx-3 mt-4"
                 >
                   Print
