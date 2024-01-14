@@ -1,46 +1,35 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../utils/AuthContext";
+import { AuthContext } from "../services/firebase/Auth";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import Sidebar from "../components/Sidebar/Sidebar";
-import TopHeader from "../components/TopHeader/TopHeader";
-import Cookies from "../components/Cookies/Cookies";
-import Login from "../components/Login/Login";
-import { routes } from "../data/routes";
+import Sidebar from "../components/Layout/Sidebar/Sidebar";
+import Cookies from "../components/Common/Cookies/Cookies";
+import Header from "../components/Layout/Header/Header";
+import { menu } from "../data/Menu";
+import Login from "./Login/Login";
 
 function Content() {
   const [cookies, setCookies] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showSidebar, showSetSidebar] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  }
+    showSetSidebar(!showSidebar);
+  } 
 
   return (
-    <div className="h-screen m-0 font-sans antialiased dark:bg-slate-900 font-normal text-base leading-default bg-gray-200 text-slate-500 min-h-75">
-      <div className="fixed w-full bg-gradient-to-r dark:from-gray-700 dark:to-sky-900 from-sky-600 to-sky-950 min-h-75 shadow-lg"></div>
-      <Sidebar isCollapsed={isCollapsed} toggleSidebar={toggleSidebar}/>
-      <main className={`relative min-h-full transition-all duration-500 ease-in-out ${isCollapsed ? 'xl:ml-28' : 'xl:ml-68'} rounded-xl px-6 py-6`}>
-        <div className="relative flex flex-wrap items-center px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start">
-          {/* <div className="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
-            <Pagination />
-            <div className="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
-              <Search />
-              <TopHeader />
-            </div>
-          </div> */}
-          <TopHeader />
-
-        </div>
-        <div className="w-full px-6 py-6 mx-auto">
-          <div className="flex flex-wrap -mx-3">
-            <div className="flex-none w-full max-w-full px-3">
+    <div className="w-full h-screen flex justify-between leading-default">
+        <Sidebar showSidebar={showSidebar} toggle={toggle} setToggle={setToggle}/>
+        <main className="w-full min-h-full xl:ml-60 transition-all duration-500 ease-in-out rounded-xl p-6">
+          <div className="flex flex-col">
+            <Header toggleSidebar={toggleSidebar} toggle={toggle}/>
+            <div className="w-full px-6 py-6 mx-auto h-screen">
               <Routes>
-                {routes.map((route, index) => (
+                {menu.map((route, index) => (
                   <Route
                     key={index}
                     path={route.path}
@@ -50,9 +39,8 @@ function Content() {
               </Routes>
             </div>
           </div>
-        </div>
-      </main>
-      <Cookies show={cookies} onClose={() => setCookies(!cookies)} />
+        </main>
+        <Cookies show={cookies} onClose={() => setCookies(!cookies)} />
     </div>
   );
 }

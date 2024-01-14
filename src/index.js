@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { createRoot } from "react-dom/client";
-import { AuthProvider } from "./utils/AuthContext";
+import { AuthProvider } from "./services/firebase/Auth";
 import { ThemeProvider } from "@material-tailwind/react";
 import App from "./views/Root";
 import "./index.css";
-import "./utils/firebase";
+import "./services/firebase/firebaseConfig";
 import AppThemeProvider from "./themes/AppThemeProvider";
 import { AppThemeContext } from "./themes/AppThemeContext";
-import { TransportProvider } from "./TransportContext/TransportProvider";
-import EditForm from "./components/EditForm/EditForm";
+import { TransportProvider } from "./services/context/TransportContext/TransportProvider";
+import { UsersProvider } from "./services/firebase/users";
 
 const RootComponent = () => {
   return (
@@ -17,7 +17,9 @@ const RootComponent = () => {
         <AppThemeProvider>
           <TransportProvider>
             <ThemeProvider>
-              <App />
+              <UsersProvider>
+                <App />
+              </UsersProvider>
             </ThemeProvider>
           </TransportProvider>
         </AppThemeProvider>

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import Button from "../Button/Button";
-import { createRecord, getRecords, updateRecord } from "../../services/api";
-import Modal from "../Modal/Modal";
+import { createRecord, getRecords, updateRecord } from "../../services/airtable/api";
+import Modal from "../Common/Modal/Modal";
 import Input from "../Input/Input";
-import Title from "../Title/Title";
+import Title from "../Common/Title/Title";
 import Form from "../Form/Form";
 import { FaTruck } from "react-icons/fa6";
-import Notification from "../Notification/Notification";
+import Notification from "../Common/Notification/Notification";
 import { RiEdit2Fill } from "react-icons/ri";
+import Details from "../Common/SetingsDetailsTable/SetingsDetailsTable";
 
 
 const CmrSettings = () => {
@@ -106,69 +107,18 @@ const CmrSettings = () => {
           <span className="font-bold">Default settings</span>
         </div>
         <dl className="divide-y divide-gray-100">
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Name company
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["Name_Company"]}
-            </dd>
-          </div>
-
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Second name company
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["Second_Name_Company"]}
-            </dd>
-          </div>
-
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Street
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["Street"]}
-            </dd>
-          </div>
-
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Number
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["Number"]}
-            </dd>
-          </div>
-          <div
-            className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Zipcode
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["Zipcode"]}
-            </dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              City
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["City"]}
-            </dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Country
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company["Country"]}
-            </dd>
-          </div>
+          <Details title="Name company" value={company["Name_Company"]} />
+          <Details title="Second name company" value={company["Second_Name_Company"]} />
+          <Details title="Street" value={company["Street"]} />
+          <Details title="Number" value={company["Number"]} />
+          <Details title="Zipcode" value={company["Zipcode"]} />
+          <Details title="City" value={company["City"]} />
+          <Details title="Country" value={company["Country"]} />
         </dl>
+        
+
+          
+       
         <div className="flex justify-between py-8 border-b border-gray-300">
           <span>Branding</span>
           <div>
@@ -241,20 +191,20 @@ const CmrSettings = () => {
             </div>
           </form>
         </div>
-        <div className="py-2 border-b border-gray-300">
-          <ul>
-            {carriers ? (
-              carriers.map((carrier, index) => (
-                <li key={index} className="flex justify-between py-2">
-                  <span>{carrier.Name_Carrier}</span>
-                  <Button onClick={() => handleEditCarrier(carrier)}><RiEdit2Fill /></Button>
-                </li>
-              ))
-            ) : (
-              <div>Loading...</div>
-            )}
-          </ul>
-        </div>
+        
+        <ul className="divide-y divide-gray-100">
+          {carriers ? (
+            carriers.map((carrier, index) => (
+              <li key={index} className="px-4 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                <span className="text-sm font-medium leading-6 text-gray-900 mb-2 sm:mb-0">{carrier.Name_Carrier}</span>
+                <Button onClick={() => handleEditCarrier(carrier)} className="text-sm leading-6 text-gray-700"><RiEdit2Fill /></Button>
+              </li>
+            ))
+          ) : (
+            <div>Loading...</div>
+          )}
+        </ul>
+        
 
 
         

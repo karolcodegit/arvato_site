@@ -91,7 +91,7 @@ export const generatePdf = (data) => {
       createRectangle(doc, 105, 40, 95, 20, {}, [
         { text: '16. Przewoznik (nazwisko lub nazwa, adres, kraj)', font: 'helvetica', fontSize: 5, align: 'left', bold: false, x: 2, y: 4 },
         { text: 'Documents attached', font: 'helvetica', fontSize: 5, align: 'left', bold: false, x: 4, y: 7 },
-        { text: `${data.tractorNumber} / ${data.trailerNumber}`, font: 'helvetica', fontSize: 10, align: 'center', bold: true, x: 95/2, y: 15 },
+        { text: `...`, font: 'helvetica', fontSize: 10, align: 'center', bold: true, x: 95/2, y: 15 },
       ]);
       //17
       createRectangle(doc, 105, 60, 95, 17, {}, [

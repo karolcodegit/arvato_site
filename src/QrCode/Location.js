@@ -21,6 +21,22 @@ const Location = ({ zone, setZone, location1, setLocation1, location2, setLocati
     { title: "U3" },
   ];
 
+  const handleChangeInput1 = (e) => {
+    const val = e.target.value;
+    if(!isNaN(val)){
+      setLocation1(e.target.value)}
+  }
+  const handleChangeInput2 = (e) => {
+    const val = e.target.value;
+    if(!isNaN(val)){
+      setLocation2(e.target.value)}
+  }
+  const handleChangeInput3 = (e) => {
+    const val = e.target.value;
+    if(!isNaN(val)){
+      setLocation3(e.target.value)}
+  }
+
   return (
     <>
       <SelectForm
@@ -31,23 +47,28 @@ const Location = ({ zone, setZone, location1, setLocation1, location2, setLocati
       <Input
         min="1"
         max="250"
+        maxLength="3"
         placeholder="Lokalizacja 1"
         value={location1}
-        onChange={(e) => setLocation1(e.target.value)}
+        onChange={(e) => handleChangeInput1(e)}
+          
+          
       />
       <Input
         min="1"
         max="250"
+        maxLength="3"
         placeholder="Lokalizacja 2"
         value={location2}
-        onChange={(e) => setLocation2(e.target.value)}
+        onChange={(e) => handleChangeInput2(e)}
       />
       <Input
         min="100"
         max="500"
+        maxLength="3"
         placeholder="Lokalizacja 3"
         value={location3}
-        onChange={(e) => setLocation3(e.target.value)}
+        onChange={(e) => handleChangeInput3(e)}
       />
     </>
   );
