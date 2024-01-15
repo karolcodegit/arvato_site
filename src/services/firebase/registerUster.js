@@ -7,7 +7,7 @@ export const addUser = async (userData, password) => {
   const auth = getAuth();
 
   // Generate the email address
-  const email = `${userData.name}.${userData.surname}@codecraft.com`;
+  const email = `${userData.Name}.${userData.Surname}@codecraft.com`;
 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -18,8 +18,8 @@ export const addUser = async (userData, password) => {
       ...userData
     });
 
-    await signOut(auth);
-    return user;
+   
+    
   } catch (error) {
     // Handle Errors here.
     const errorCode = error.code;

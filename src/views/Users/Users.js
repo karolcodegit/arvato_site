@@ -10,17 +10,17 @@ import Modal from "../../components/Common/Modal/Modal";
 import Form from "../../components/Form/Form";
 import { addUser } from "../../services/firebase/registerUster";
 import { DepartmentIcon, KeyIcon, UserIcon } from "../../components/Common/Icons/Icons";
+import Notification from "../../components/Common/Notification/Notification";
 
 const Users = () => {
-  // const [users, setUsers] = useState([]);
   const headers = ["Name", "Surname", "Department", "Group"];
   const users = useContext(UsersContext);
   const [showModal, setShowModal] = useState(false);
-
+  const [notification, setNotification] = useState({ message: '', type: '' });
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [department, setDepartment] = useState("");
-  const [group, setGroup] = useState("");
+  const [department, setDepartment] = useState("DC15");
+  const [group, setGroup] = useState("Admin");
   const [password, setPassword] = useState("admin123");
 
   const departments = [{ id: 1, name: "DC15" } ];
@@ -38,6 +38,7 @@ const Users = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
     switch (name) {
       case 'Name':
         setName(value);
@@ -63,7 +64,9 @@ const Users = () => {
   }
 
   const handleSave = async () => {
+    
     try {
+      console.log(name, surname);
       await addUser({
         Name: name,
         Surname: surname,
@@ -71,15 +74,16 @@ const Users = () => {
         Group: group,
         
       }, password);
-      // handle success
+      setNotification({ message: 'User added successfully', type: 'success' });
     } catch (e) {
-      console.log(e);
+      setNotification({ message: 'Failed', type: 'error' });
     }
     closeModal();
   };
 
   return (
     <>
+    {notification.message && <Notification message={notification.message} type={notification.type} />}
       <Box>
         <div className="flex items-center justify-between gap-8 mb-8">
           <div>

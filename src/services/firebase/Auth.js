@@ -1,44 +1,77 @@
-import React, { useState, useEffect, createContext } from 'react';
-import { getAuth, onAuthStateChanged, getIdToken, signOut } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import { app } from "./firebaseConfig";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  setPersistence,
+  signInWithEmailAndPassword,
+  browserLocalPersistence,
+} from "firebase/auth";
+import Loading from "../../components/Loading/Loading";
 
 export const AuthContext = createContext(null);
+const db = getFirestore(app);
+
+console.log(db);
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem('token') ? true : null);
-  const [loading, setLoading] = useState(false);
-  
-    useEffect(() => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          // User is signed in, get the token
-          const token = await getIdToken(user);
-          // Set the token in localStorage
-          localStorage.setItem('token', token);
-          setCurrentUser(user);
-        } else {
-          // User is signed out, clear the token from localStorage
-          localStorage.removeItem('token');
-            setCurrentUser(null);
-        }
-        setLoading(false);
-      });
-    }, []);
-  
-    if (loading) {
-      return <div>Loading...</div>; // Or your loading component
-    }
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  const fetchUserDetails = async (uid) => {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setUserDetails(docSnap.data());
+    }
+  };
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user);
+        fetchUserDetails(user.uid);
+      } else {
+        setCurrentUser(null);
+        setUserDetails(null);
+      }
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (loading) {
+    return <Loading />; // Or your loading component
+  }
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser, userDetails }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+export const loginUser = async (email, password) => {
+  const auth = getAuth();
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error("Error signing in", error);
+  }
+};
+
 export const logoutUser = async () => {
   const auth = getAuth();
-  await signOut(auth);
-  localStorage.removeItem('token');
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Error signing out", error);
+  }
 };
