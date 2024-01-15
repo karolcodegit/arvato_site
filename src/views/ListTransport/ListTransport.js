@@ -11,7 +11,7 @@ import { FaTruck } from "react-icons/fa6";
 import { createRecord, getRecords } from "../../services/airtable/api";
 import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import { list_carriers } from "../../data/ListCarriers";
+// import { list_carriers } from "../../data/ListCarriers";
 
 const ListTransport = () => {
   const headers = [
@@ -109,14 +109,14 @@ const ListTransport = () => {
     <Modal isOpen={isModalOpen} onClose={closeModal}>
        <Form>
           <Title tag="h4">Additing new track</Title>
-          <Input
+          {/* <Input
             type="select"
             name="Carrier"
             icon={FaTruck}
             label="Carrier"
             options={list_carriers.map((carrier) => carrier.carrier)}
             onChange={handleInputChange}
-          />
+          /> */}
           <Input
             type="text"
             name="Carrier_Number"
