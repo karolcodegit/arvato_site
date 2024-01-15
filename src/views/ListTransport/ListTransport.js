@@ -11,7 +11,7 @@ import { FaTruck } from "react-icons/fa6";
 import { createRecord, getRecords } from "../../services/airtable/api";
 import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import { listCarriers } from "../../data/ListCarriers";
+import { list_carriers } from "../../data/ListCarriers";
 
 const ListTransport = () => {
   const headers = [
@@ -114,7 +114,7 @@ const ListTransport = () => {
             name="Carrier"
             icon={FaTruck}
             label="Carrier"
-            options={listCarriers.map((carrier) => carrier.carrier)}
+            options={list_carriers.map((carrier) => carrier.carrier)}
             onChange={handleInputChange}
           />
           <Input

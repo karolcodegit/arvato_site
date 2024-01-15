@@ -1,4 +1,4 @@
-export const listCarriers = [
+export const list_carriers = [
     {carrier: 'DHL', id: 1},
     {carrier: 'PILOT', id: 2},
     {carrier: 'CYR_IT', id: 3},
