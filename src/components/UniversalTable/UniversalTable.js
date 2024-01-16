@@ -47,7 +47,7 @@ const UniversalTable = ({
     setIsAllChecked(!isAllChecked);
   };
   return (
-    <Box>
+    <Box col>
       {withAddButton && (
         <div className="p-6 pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between items-center">
           <Title tag="h5">{nameTable}</Title>

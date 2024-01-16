@@ -30,7 +30,7 @@ const Setting = () => {
     <>
       
       <div className="flex">
-        <Box className="p-6 w-52 bg-white rounded-2xl ">
+        <Box col className="p-6 w-52 bg-white rounded-2xl ">
           <h1 className="text-2xl font-bold mb-4">Settings</h1>
           {sections.map((section) => (
               <button

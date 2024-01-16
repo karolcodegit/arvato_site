@@ -1,39 +1,50 @@
 import React, { useState } from "react";
-import Form from "../components/Form/Form";
 import SelectForm from "../components/SelectForm/SelectForm";
 import Input from "../components/Input/Input";
 
-const Url = (
-  selectedCode,
-  setSelectedCode,
-  selectedWithText,
-  setSelectedWithText,
-  text,
-  setText
-) => {
+const Url = ({
+  codeType,
+  showText,
+  inputText,
+  setCodeType,
+  setShowText,
+  setInputText,
+}) => {
   const selectCode = [{ title: "QR" }, { title: "Code-128" }];
   const withText = [{ title: "Yes" }, { title: "No" }];
+
+  const handleSelectChange = (e) => {
+    setCodeType(e.target.value);
+  };
+
+  const handleTextShow = () => {
+    setShowText(!showText);
+  };
+
+  const handleTextChange = (e) => {
+    setInputText(e.target.value);
+  };
 
   return (
     <>
       <SelectForm
         label="Select Code"
-        value={selectedCode}
-        onChange={(e) => setSelectedCode(e.target.value)}
+        value={codeType}
+        onChange={handleSelectChange}
         options={selectCode}
       />
       <SelectForm
         label="With text?"
-        value={selectedWithText}
-        onChange={(e) => setSelectedWithText(e.target.value)}
+        value={showText}
+        onChange={handleTextShow}
         options={withText}
       />
       <Input
         label="Text"
         type="text"
         placeholder="Text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        value={inputText}
+        onChange={handleTextChange}
       />
     </>
   );

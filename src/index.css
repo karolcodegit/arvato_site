@@ -53,6 +53,10 @@ body{
   @apply flex items-center mt-2 p-2 rounded-lg cursor-pointer hover:bg-white overflow-y-auto antialiased transition-all duration-500 ease-in-out inset-y-0 text-gray-100 hover:text-gray-900
 }
 
+.tableBody  > :not([hidden]) ~ :not([hidden]) {
+  @apply divide-opacity-100 divide-gray-300;
+}
+
 
 
 /* @media print {

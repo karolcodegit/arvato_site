@@ -2,7 +2,7 @@ import React from 'react'
 import { IoSettingsOutline } from "react-icons/io5";
 import { AiFillHome } from "react-icons/ai";
 import { BiPrinter } from "react-icons/bi";
-import { FaCarSide, FaUsers, FaKey } from "react-icons/fa";
+import { FaCarSide, FaUsers, FaKey, FaPager, FaTrailer } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { FcPrint } from "react-icons/fc";
 import { IoIosNotificationsOutline, IoMdLogOut } from "react-icons/io";
@@ -10,20 +10,12 @@ import { CiUser } from "react-icons/ci";
 import { RxUpdate } from "react-icons/rx";
 import { FcDepartment } from "react-icons/fc";
 import { MdOutlineAlternateEmail } from "react-icons/md";
-import { FaTruck } from "react-icons/fa6";
-import { FaPager } from "react-icons/fa";
-import { FaTrailer } from "react-icons/fa";
-import { FaTruckFront } from "react-icons/fa6";
+import { FaTruck, FaTruckFront } from "react-icons/fa6";
 import { LiaPalletSolid } from "react-icons/lia";
 import { PiPackage } from "react-icons/pi";
 import { GiWeight } from "react-icons/gi";
-import { BsCalendar2Date } from "react-icons/bs";
-
-
-
-
-
-
+import { BsCalendar2Date, BsSortUp } from "react-icons/bs";
+import { GoSortDesc } from "react-icons/go";
 
 
 
@@ -49,6 +41,9 @@ export const PalletIcon = (props) => <LiaPalletSolid {...props}/>
 export const PackageIcon = (props) => <PiPackage {...props}/>
 export const WeightIcon = (props) => <GiWeight {...props}/>
 export const CalendarIcon = (props) => <BsCalendar2Date {...props}/>
+
+export const SortDescIcon = (props) => <GoSortDesc {...props} />;
+export const SortUpIcon = (props) => <BsSortUp {...props} />;
 
 
 

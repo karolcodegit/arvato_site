@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import UniversalTable from "../../components/UniversalTable/UniversalTable";
 import Button, {
   EditButton,
@@ -11,18 +11,44 @@ import { FaTruck } from "react-icons/fa6";
 import { createRecord, getRecords } from "../../services/airtable/api";
 import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
+import Table from "../../components/Table/Table";
+import Box from "../../components/Box/Box";
 // import { list_carriers } from "../../data/ListCarriers";
 
 const ListTransport = () => {
-  const headers = [
-    "Date",
-    "Carrier",
-    "Carrier Number",
-    "License Truck",
-    "License Trailer",
-    "Status",
-    "Pager",
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Date",
+        accessor: "Date",
+      },
+      {
+        Header: "Carrier",
+        accessor: "Carrier",
+      },
+      {
+        Header: "Carrier Number",
+        accessor: "Carrier_Number",
+      },
+      {
+        Header: "License Truck",
+        accessor: "License_Truck",
+      },
+      {
+        Header: "License Trailer",
+        accessor: "License_Trailer",
+      },
+      {
+        Header: "Status",
+        accessor: "Status",
+      },
+      {
+        Header: "Pager",
+        accessor: "Pager",
+      },
+    ], []
+  );
+
 
   const { data, fetchData, setEditData } =
     useContext(TransportContext);
@@ -95,16 +121,28 @@ const ListTransport = () => {
       Pager: "",
     });
   };
+
+
+  const onAddButtonClick = () => {
+    setIsModalOpen(true);
+  }
   return (
     <>
-    <UniversalTable
+    {/* <UniversalTable
       headers={headers}
       data={selectedData}
       actions={actions}
       nameTable="List of trucks"
       withAddButton
       onAddButtonClick={openModal} // openModal
-    />
+    /> */}
+    <Box col>
+        <div className="p-6 pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between items-center">
+          <Title tag="h5">List transport</Title>
+          <Button onClick={onAddButtonClick}>Add truck</Button>
+        </div>
+    </Box>
+    <Table columns={columns} data={data} />
 
     <Modal isOpen={isModalOpen} onClose={closeModal}>
        <Form>

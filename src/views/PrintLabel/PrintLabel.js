@@ -10,8 +10,9 @@ import Tabs from "../../components/Tabs/Tabs";
 import Location from "../../QrCode/Location";
 import Url from "../../QrCode/Url";
 import Label from "../../components/LayoutLabel/Label";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+import { printLabel } from "../../utils/printLabel";
+
+
 
 const PrintLabel = () => {
   const [zone, setZone] = useState("F1");
@@ -21,9 +22,9 @@ const PrintLabel = () => {
 
   const [activeTab, setActiveTab] = useState("Location");
 
-  const [selectedCode, setSelectedCode] = useState("");
-  const [selectedWithText, setSelectedWithText] = useState("");
-  const [text, setText] = useState("");
+  const [codeType, setCodeType] = useState("QR");
+  const [showText, setShowText] = useState(true);
+  const [inputText, setInputText] = useState("");
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -31,43 +32,35 @@ const PrintLabel = () => {
 
   let Layout;
 
-  if(activeTab === 'Location'){
+  if (activeTab === "Location") {
     if (zone.startsWith("U")) {
       Layout = zoneU;
     } else if (zone.startsWith("F") || zone.startsWith("H")) {
       Layout = zoneFH;
     }
-  }else{
+  } else {
     Layout = Label;
   }
-  
 
-  const printLabelFn = () => {
-    html2canvas(document.querySelector("#label")).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-  
-      // Ustawienie rozmiaru strony na 10 cm x 3.5 cm
-      const pdf = new jsPDF('p', 'mm', [10, 3.5]);
-  
-      pdf.addImage(imgData, 'PNG', 0, 0, 10, 3.5);
-  
-      // Utworzenie nowego okna i ustawienie jego zawartości na wygenerowany PDF
-      const pdfWindow = window.open("");
-      pdfWindow.document.write(
-        "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
-        btoa(pdf.output()) +
-        "'></iframe>"
-      );
-    });
-  };
+  const clearInputs = () => {
+    setZone("F1");
+    setLocation1("");
+    setLocation2("");
+    setLocation3("");
+    setActiveTab("Location");
+    setCodeType("QR");
+    setShowText(true);
+    setInputText("");
+  }
   return (
     <>
-      <Box className="flex flex-col items-center md:flex-row">
+      <Box className="items-center md:flex-row flex-col">
         <IoQrCodeOutline className="text-3xl" />
         <h1 className="pl-2 font-bold">QR CODE GENERATOR</h1>
       </Box>
-      <div className="flex gap-3 w-full grow">
-        <Box className="flex flex-col w-3/5">
+
+      <div className="flex xl:flex-row flex-col gap-3 w-full grow">
+        <Box col className="xl:w-3/5 w-full">
           <Tabs
             tabs={[
               {
@@ -94,19 +87,18 @@ const PrintLabel = () => {
               />
             )}
             {activeTab === "Url" && (
-              <Url 
-              selectedCode={selectedCode}
-              setSelectedCode={setSelectedCode}
-              selectedWithText={selectedWithText}
-              setSelectedWithText={setSelectedWithText}
-              text={text}
-              setText={setText}
+              <Url
+                inputText={inputText}
+                setInputText={setInputText}
+                showText={showText}
+                setShowText={setShowText}
+                codeType={codeType}
+                setCodeType={setCodeType}
               />
             )}
-
           </div>
         </Box>
-        <Box className="flex flex-col w-2/5 items-center justify-between py-10">
+        <Box className="flex flex-col xl:w-2/5 w-full  items-center justify-between py-10">
           <Title tag="h2">Preview</Title>
           <div className="w-full flex items-center justify-center">
             {Layout && (
@@ -115,6 +107,9 @@ const PrintLabel = () => {
                 location1={location1}
                 location2={location2}
                 location3={location3}
+                inputText={inputText}
+                showText={showText}
+                codeType={codeType}
               />
             )}
             <div className="block absolute w-8 h-8 left-[-23px] top-1/2 transform -translate-y-1/2 z-50">
@@ -124,21 +119,23 @@ const PrintLabel = () => {
             </div>
           </div>
           <div className="flex gap-4 mt-4">
-            <Button onClick={printLabelFn} colorScheme="blue">Pobierz</Button>
+            <Button onClick={printLabel} colorScheme="blue">
+              Pobierz
+            </Button>
             <Button colorScheme="green">Vector</Button>
           </div>
         </Box>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between space-x-4 p-4">
-        <Button bg="bg-red-500" textColor="text-white" width="w-full md:w-1/2">
+      <div className="flex flex-row justify-between space-x-4 p-4">
+        <Button onClick={clearInputs} bg="bg-red-500" textColor="text-white" width="w-1/2">
           Clear
         </Button>
         <Button
-          onClick={printLabelFn}
+          onClick={printLabel}
           bg="bg-green-500"
           textColor="text-white"
-          width="w-full md:w-1/2"
+          width="w-1/2"
         >
           Print
         </Button>

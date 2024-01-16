@@ -1,10 +1,28 @@
+import QRCode from 'qrcode.react';
 import React from 'react'
+import Barcode from 'react-barcode';
 
-const Label = ({ barcode, number }) => {
+const Label = ({
+  inputText,
+  showText,
+  codeType,
+}) => {
     return (
-      <div style={{ width: '7cm', height: '4cm', border: '1px solid black', marginBottom: '1cm' }}>
-        <p>Barcode: {barcode}</p>
-        <p>Number: {number}</p>
+      <div id="label" className='flex flex-col'>
+        {codeType === 'QR' ? (
+          <QRCode value={inputText} />
+        ) : (
+          <Barcode value={inputText} displayValue={false} format="CODE128" />
+        )
+      }
+        <div className='py-3'>
+            {showText && (
+              <p className="text-center text-sm font-bold">{inputText}</p>
+            
+            )
+            }
+        </div>
+        
       </div>
     );
   };
