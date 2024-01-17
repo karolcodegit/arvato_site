@@ -10,71 +10,84 @@ import { FaTruck } from "react-icons/fa6";
 import Notification from "../Common/Notification/Notification";
 import { RiEdit2Fill } from "react-icons/ri";
 import Details from "../Common/SetingsDetailsTable/SetingsDetailsTable";
+import { getData } from "../../services/firebase/database";
 
 
 const CmrSettings = () => {
+  const [data, setData] = useState([]);
+
+ 
   const [showModal, setShowModal] = useState(false);
   const [company, setCompany] = useState(null);
+
+
+  console.log(company);
   const [carriers, setCarriers] = useState(null);
 
   const [formData, setFormData] = useState(null);
-  const [editingCarrier, setEditingCarrier] = useState(null);
+  // const [editingCarrier, setEditingCarrier] = useState(null);
 
   const [notification, setNotification] = useState({message: '', type: ''});
 
-  const handleAddCarrier = () => {
-    setFormData({
-      Name_Carrier: "",
-      Street: "",
-      Number: "",
-      City: "",
-      Country: "",
-    })
-    setEditingCarrier(null);
-    setShowModal(true);
-  }
+  // const handleAddCarrier = () => {
+  //   setFormData({
+  //     Name_Carrier: "",
+  //     Street: "",
+  //     Number: "",
+  //     City: "",
+  //     Country: "",
+  //   })
+  //   setEditingCarrier(null);
+  //   setShowModal(true);
+  // }
 
-  const handleEditCarrier = (carrier) => {
-    setFormData({
-      Name_Carrier: carrier.Name_Carrier,
-      Street: carrier.Street,
-      Number: carrier.Number,
-      City: carrier.City,
-      Country: carrier.Country,
-    })
-    setEditingCarrier(carrier);
-    setShowModal(true);
+  // const handleEditCarrier = (carrier) => {
+  //   setFormData({
+  //     Name_Carrier: carrier.Name_Carrier,
+  //     Street: carrier.Street,
+  //     Number: carrier.Number,
+  //     City: carrier.City,
+  //     Country: carrier.Country,
+  //   })
+  //   setEditingCarrier(carrier);
+  //   setShowModal(true);
+  // }
+  const handleAddCarrier = (carrier) => {
   }
 
   const handleSave = async () => {
-    try{
-    if (editingCarrier) {
-      const updatedCarrier = await updateRecord('app1pZi9VU5pPRXs9', 'Carriers', editingCarrier.id, formData);
-      setCarriers(prevCarriers => prevCarriers.map(carrier => carrier.id === updatedCarrier.id ? updatedCarrier : carrier));
-      setNotification({message: 'Editing success!', type: 'success'});
-    } else {
-      const newCarrier = await createRecord('app1pZi9VU5pPRXs9', 'Carriers', formData);
-      setCarriers(prevCarriers => [...prevCarriers, newCarrier]);
-      setNotification({message: 'New carrier successfully added', type: 'success'});
-    }
+  }
+  // const handleSave = async () => {
+  //   try{
+  //   if (editingCarrier) {
+  //     const updatedCarrier = await updateRecord('app1pZi9VU5pPRXs9', 'Carriers', editingCarrier.id, formData);
+  //     setCarriers(prevCarriers => prevCarriers.map(carrier => carrier.id === updatedCarrier.id ? updatedCarrier : carrier));
+  //     setNotification({message: 'Editing success!', type: 'success'});
+  //   } else {
+  //     const newCarrier = await createRecord('app1pZi9VU5pPRXs9', 'Carriers', formData);
+  //     setCarriers(prevCarriers => [...prevCarriers, newCarrier]);
+  //     setNotification({message: 'New carrier successfully added', type: 'success'});
+  //   }
     
-    }catch(e){
-      setNotification({message: 'operation failed!', type: 'error'});
-    }
-    setShowModal(false);
-  };
+  //   }catch(e){
+  //     setNotification({message: 'operation failed!', type: 'error'});
+  //   }
+  //   setShowModal(false);
+  // };
 
   
   useEffect(() => {
-    const fetchCompany = async () => {
-      const record = await getRecords("app1pZi9VU5pPRXs9", "Company");
-      setCompany(record[0]);
+    const fetchData = async () => {
+      try {
+        const records = await getData("BusinessEntities");
+        setCompany(records);
 
-      const carrier = await getRecords("app1pZi9VU5pPRXs9", "Carriers");
-      setCarriers(carrier);
+        console.log(records);
+      } catch (error) {
+        console.error(error);
+      }
     };
-
-    fetchCompany();
+    fetchData();
   }, []);
 
   if (!company) {
@@ -86,7 +99,7 @@ const CmrSettings = () => {
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -107,13 +120,13 @@ const CmrSettings = () => {
           <span className="font-bold">Default settings</span>
         </div>
         <dl className="divide-y divide-gray-100">
-          <Details title="Name company" value={company["Name_Company"]} />
-          <Details title="Second name company" value={company["Second_Name_Company"]} />
-          <Details title="Street" value={company["Street"]} />
-          <Details title="Number" value={company["Number"]} />
-          <Details title="Zipcode" value={company["Zipcode"]} />
-          <Details title="City" value={company["City"]} />
-          <Details title="Country" value={company["Country"]} />
+          <Details title="Name company" value={company[0]?.Company_Name} />
+          <Details title="Second name company" value={company[0]?.Second_Name} />
+          <Details title="Street" value={company[0]?.Street} />
+          <Details title="Number" value={company[0]?.Building_Number} />
+          <Details title="Zipcode" value={company[0]?.Zipcode} />
+          <Details title="City" value={company[0]?.City} />
+          <Details title="Country" value={company[0]?.Country} />
         </dl>
         
 
@@ -197,7 +210,7 @@ const CmrSettings = () => {
             carriers.map((carrier, index) => (
               <li key={index} className="px-4 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <span className="text-sm font-medium leading-6 text-gray-900 mb-2 sm:mb-0">{carrier.Name_Carrier}</span>
-                <Button onClick={() => handleEditCarrier(carrier)} className="text-sm leading-6 text-gray-700"><RiEdit2Fill /></Button>
+                <Button onClick={() => handleAddCarrier(carrier)} className="text-sm leading-6 text-gray-700"><RiEdit2Fill /></Button>
               </li>
             ))
           ) : (

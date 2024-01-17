@@ -38,7 +38,6 @@ const Users = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     switch (name) {
       case 'Name':
         setName(value);
@@ -66,7 +65,6 @@ const Users = () => {
   const handleSave = async () => {
     
     try {
-      console.log(name, surname);
       await addUser({
         Name: name,
         Surname: surname,
@@ -84,7 +82,7 @@ const Users = () => {
   return (
     <>
     {notification.message && <Notification message={notification.message} type={notification.type} />}
-      <Box>
+      <Box col>
         <div className="flex items-center justify-between gap-8 mb-8">
           <div>
             <Title tag="h2">Users list</Title>

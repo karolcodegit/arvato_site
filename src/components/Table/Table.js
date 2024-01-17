@@ -5,7 +5,7 @@ import { BsSortUp } from "react-icons/bs";
 import Box from "../Box/Box";
 import Button from "../Button/Button";
 
-const Table = ({ data, columns }) => {
+const Table = ({ data, columns, showActions, onEdit }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -83,52 +83,62 @@ const Table = ({ data, columns }) => {
                     </td>
                   );
                 })}
+                {showActions && (
+                    <td className=" py-4 whitespace-nowrap">
+                        <Button onClick={() => onEdit(row.original.id)}>Edit</Button>
+                    </td>
+                )}
               </tr>
             );
           })}
         </tbody>
       </table>
-      <div className="px-6 pt-3 border-t border-gray-200">
-      <div className="flex  items-center justify-between mt-4 w-full">
-        <span className="text-gray-700 text-sm ">
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
-        </span>
-        <div>
-          <Button
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-            className="first:mr-2 last:ml-2 px-4 py-2 rounded "
-          >
-            {"<"}
-          </Button>
-          <Button
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-            className="first:mr-2 last:ml-2 px-4 py-2 bg-sky-800 text-white rounded hover:bg-blue-700 "
-          >
-            {">"}
-          </Button>
+      {data.length === 10 && (
+        <div className="px-6 pt-3 border-t border-gray-200">
+        <div className="flex  items-center justify-between mt-4 w-full">
+          <span className="text-gray-700 text-sm ">
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{" "}
+          </span>
+          <div>
+            <Button
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+              className="first:mr-2 last:ml-2 px-4 py-2 rounded "
+            >
+              {"<"}
+            </Button>
+            <Button
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+              className="first:mr-2 last:ml-2 px-4 py-2 bg-sky-800 text-white rounded hover:bg-blue-700 "
+            >
+              {">"}
+            </Button>
+          </div>
+  
+          {/* <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+              }}
+              className="ml-2 border rounded"
+            >
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select> */}
+  
+          </div>
         </div>
 
-        {/* <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-            className="ml-2 border rounded"
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select> */}
-
-        </div>
-      </div>
+      )
+    }
+      
     </Box>
   );
 };

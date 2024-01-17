@@ -45,6 +45,8 @@ function createRectangle(doc, x, y, width, height, options = {}, rows = []) {
   }
 
 export const generatePdf = (data) => {
+
+
     var doc = new jsPDF('p', 'mm', 'a4');
 
     //1
@@ -79,13 +81,13 @@ export const generatePdf = (data) => {
       createRectangle(doc, 10, 77, 95, 17, {}, [
         { text: '4. Miejsce i data zaladowania (miejscowosc, kraj, data)', font: 'helvetica', fontSize: 5, align: 'left', bold: false, x: 2, y: 4 },
         { text: 'Place and date of taking over the goods (place, country)', font: 'helvetica', fontSize: 5, align: 'left', bold: false, x: 4, y: 7 },
-        { text: 'Dn', font: 'helvetica', fontSize: 10, align: 'center', bold: true, x: 95/2, y: 15 },
+        { text: `${data.Date}`, font: 'helvetica', fontSize: 10, align: 'center', bold: true, x: 95/2, y: 15 },
       ]);
       //5
       createRectangle(doc, 10, 94, 95, 18, {}, [
         { text: '5. Zalaczam dokumenty', font: 'helvetica', fontSize: 5, align: 'left', bold: false, x: 2, y: 4 },
         { text: 'Documents attached', font: 'helvetica', fontSize: 5, align: 'left', bold: false, x: 4, y: 7 },
-        { text: 'Manifest / Carrier list NUMER', font: 'helvetica', fontSize: 10, align: 'center', bold: true, x: 95/2, y: 15 },
+        { text: `Manifest / Carrier list ${data.Carrier_Number}`, font: 'helvetica', fontSize: 10, align: 'center', bold: true, x: 95/2, y: 15 },
       ]);
       //16
       createRectangle(doc, 105, 40, 95, 20, {}, [
