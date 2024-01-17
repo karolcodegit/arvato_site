@@ -9,7 +9,7 @@ import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/Table/Table";
 import Box from "../../components/Box/Box";
-import { list_carriers } from "../../data/ListCarriers";
+// import { list_carriers } from "../../data/ListCarriers";
 import { addData, getData } from "../../services/firebase/database";
 import Notification from "../../components/Common/Notification/Notification";
 
@@ -131,7 +131,7 @@ const ListTransport = () => {
             name="Carrier"
             icon={FaTruck}
             label="Carrier"
-            options={list_carriers.map((carrier) => carrier.carrier)}
+            // options={list_carriers.map((carrier) => carrier.carrier)}
             onChange={handleInputChange}
           />
           <Input
