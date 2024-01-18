@@ -9,7 +9,7 @@ import { UsersContext } from "../../services/firebase/users";
 import Modal from "../../components/Common/Modal/Modal";
 import Form from "../../components/Form/Form";
 import { addUser } from "../../services/firebase/registerUster";
-import { DepartmentIcon, KeyIcon, UserIcon } from "../../components/Common/Icons/Icons";
+import { DepartmentIcon, KeyIcon, PlusIcon, UserIcon } from "../../components/Common/Icons/Icons";
 import Notification from "../../components/Common/Notification/Notification";
 
 const Users = () => {
@@ -92,7 +92,7 @@ const Users = () => {
               type="button"
               bg="bg-gray-700"
               onClick={() => setShowModal(true)}
-            >
+            ><PlusIcon className='mr-4 w-4 h-4 font-bold' />
               Add user
             </Button>
           </div>

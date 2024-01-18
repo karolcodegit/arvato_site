@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
-import { SortDescIcon } from "../Common/Icons/Icons";
+import { SearchIcon, SortDescIcon } from "../Common/Icons/Icons";
 import { BsSortUp } from "react-icons/bs";
 import Box from "../Box/Box";
 import Button from "../Button/Button";
+import Input from "../Input/Input";
 
 const Table = ({ data, columns, showActions, onEdit }) => {
   const {
@@ -32,94 +33,107 @@ const Table = ({ data, columns, showActions, onEdit }) => {
   );
 
   return (
-    <Box col>
-      <table
-        {...getTableProps()}
-        className="min-w-full border-collapse divide-y divide-gray-200"
-      >
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="px-6 py-3 text-left text-xxs font-semibold text-gray-700 uppercase tracking-wider"
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <SortDescIcon className="flex" />
-                      ) : (
-                        <BsSortUp />
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody
-          {...getTableBodyProps()}
-          className="bg-white divide-y divide-gray-200 tableBody"
+    <>
+      <Box>
+        <div className='flex w-full '>
+        <div>
+          <Input type="search" icon={SearchIcon}/>
+        </div>
+        <div>
+          <Input type="search" value='Show all' />
+        </div>
+        </div>
+      </Box>
+      <Box col>
+        <table
+          {...getTableProps()}
+          className="min-w-full border-collapse divide-y divide-gray-200"
         >
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                className="font-medium text-gray-500 text-xs py-4 whitespace-nowrap"
-              >
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      className="px-6 py-4 whitespace-nowrap"
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-                {showActions && (
-                    <td className=" py-4 whitespace-nowrap">
-                        <Button onClick={() => onEdit(row.original.id)}>Edit</Button>
-                    </td>
-                )}
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="px-6 py-3 text-left text-xxs font-semibold text-gray-700 uppercase tracking-wider"
+                  >
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <SortDescIcon className="flex" />
+                        ) : (
+                          <BsSortUp />
+                        )
+                      ) : (
+                        ""
+                      )}
+                    </span>
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {data.length === 10 && (
-        <div className="px-6 pt-3 border-t border-gray-200">
-        <div className="flex  items-center justify-between mt-4 w-full">
-          <span className="text-gray-700 text-sm ">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <div>
-            <Button
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-              className="first:mr-2 last:ml-2 px-4 py-2 rounded "
-            >
-              {"<"}
-            </Button>
-            <Button
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-              className="first:mr-2 last:ml-2 px-4 py-2 bg-sky-800 text-white rounded hover:bg-blue-700 "
-            >
-              {">"}
-            </Button>
-          </div>
-  
-          {/* <select
+            ))}
+          </thead>
+          <tbody
+            {...getTableBodyProps()}
+            className="bg-white divide-y divide-gray-200 tableBody"
+          >
+            {page.map((row) => {
+              prepareRow(row);
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  className="font-medium text-gray-500 text-xs py-4 whitespace-nowrap"
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        className="px-6 py-4 whitespace-nowrap"
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                  {showActions && (
+                    <td className=" py-4 whitespace-nowrap">
+                      <Button onClick={() => onEdit(row.original.id)}>
+                        Edit
+                      </Button>
+                    </td>
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {data.length === 10 && (
+          <div className="px-6 pt-3 border-t border-gray-200">
+            <div className="flex  items-center justify-between mt-4 w-full">
+              <span className="text-gray-700 text-sm ">
+                Page{" "}
+                <strong>
+                  {pageIndex + 1} of {pageOptions.length}
+                </strong>{" "}
+              </span>
+              <div>
+                <Button
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                  className="first:mr-2 last:ml-2 px-4 py-2 rounded "
+                >
+                  {"<"}
+                </Button>
+                <Button
+                  onClick={() => nextPage()}
+                  disabled={!canNextPage}
+                  className="first:mr-2 last:ml-2 px-4 py-2 bg-sky-800 text-white rounded hover:bg-blue-700 "
+                >
+                  {">"}
+                </Button>
+              </div>
+
+              {/* <select
               value={pageSize}
               onChange={(e) => {
                 setPageSize(Number(e.target.value));
@@ -132,14 +146,11 @@ const Table = ({ data, columns, showActions, onEdit }) => {
                 </option>
               ))}
             </select> */}
-  
+            </div>
           </div>
-        </div>
-
-      )
-    }
-      
-    </Box>
+        )}
+      </Box>
+    </>
   );
 };
 

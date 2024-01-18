@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import Button from "../Button/Button";
-import { createRecord, getRecords, updateRecord } from "../../services/airtable/api";
 import Modal from "../Common/Modal/Modal";
 import Input from "../Input/Input";
 import Title from "../Common/Title/Title";
@@ -10,79 +9,102 @@ import { FaTruck } from "react-icons/fa6";
 import Notification from "../Common/Notification/Notification";
 import { RiEdit2Fill } from "react-icons/ri";
 import Details from "../Common/SetingsDetailsTable/SetingsDetailsTable";
-import { getData } from "../../services/firebase/database";
+import { addData, getData } from "../../services/firebase/database";
 
+
+
+// const CmrSettings = () => {
+//   const [data, setData] = useState([]);
+//   const [showModal, setShowModal] = useState(false);
+//   const [company, setCompany] = useState(null);
+//   const [carriers, setCarriers] = useState(null);
+//   const [formData, setFormData] = useState(null);
+//   const [notification, setNotification] = useState({ message: "", type: "" });
+  
+//     const handleAddCarrier = (carrier) => {
+//       setShowModal(true);
+//     };
+
+//     const handleSave = async () => {
+//     try{
+//       const carrierData = {
+//         Name_Carrier: formData.Name_Carrier,
+//         Street: formData.Street,
+//         Number: formData.Number,
+//         City: formData.City,
+//         Country: formData.Country,
+//         };
+//         const docId = await addData("Carriers", carrierData);
+//         const records = await getData("Carriers");
+//         setDatas(records);
+//         handleCloseModal();
+//         setCarriers(prevCarriers => [...prevCarriers, carrierData]);
+//         setFormData(null);
+       
+//       }catch(e){
+//         console.error(e)
+//       }
+//     }
+  
+
+
+//   return (
+//     <div>CmrSettings</div>
+//   )
+// }
+
+// export default CmrSettings
 
 const CmrSettings = () => {
   const [data, setData] = useState([]);
-
- 
   const [showModal, setShowModal] = useState(false);
   const [company, setCompany] = useState(null);
-
-
-  console.log(company);
   const [carriers, setCarriers] = useState(null);
+  const [formData, setFormData] = useState({
+    Name_Carrier: '',
+    Street: '',
+    Building_Number: '',
+    City: '',
+    Country: '',
+  });
+  const [notification, setNotification] = useState({ message: "", type: "" });
 
-  const [formData, setFormData] = useState(null);
-  // const [editingCarrier, setEditingCarrier] = useState(null);
-
-  const [notification, setNotification] = useState({message: '', type: ''});
-
-  // const handleAddCarrier = () => {
-  //   setFormData({
-  //     Name_Carrier: "",
-  //     Street: "",
-  //     Number: "",
-  //     City: "",
-  //     Country: "",
-  //   })
-  //   setEditingCarrier(null);
-  //   setShowModal(true);
-  // }
-
-  // const handleEditCarrier = (carrier) => {
-  //   setFormData({
-  //     Name_Carrier: carrier.Name_Carrier,
-  //     Street: carrier.Street,
-  //     Number: carrier.Number,
-  //     City: carrier.City,
-  //     Country: carrier.Country,
-  //   })
-  //   setEditingCarrier(carrier);
-  //   setShowModal(true);
-  // }
-  const handleAddCarrier = (carrier) => {
-  }
+  const handleAddCarrier = () => {
+    setShowModal(true);
+  };
 
   const handleSave = async () => {
-  }
-  // const handleSave = async () => {
-  //   try{
-  //   if (editingCarrier) {
-  //     const updatedCarrier = await updateRecord('app1pZi9VU5pPRXs9', 'Carriers', editingCarrier.id, formData);
-  //     setCarriers(prevCarriers => prevCarriers.map(carrier => carrier.id === updatedCarrier.id ? updatedCarrier : carrier));
-  //     setNotification({message: 'Editing success!', type: 'success'});
-  //   } else {
-  //     const newCarrier = await createRecord('app1pZi9VU5pPRXs9', 'Carriers', formData);
-  //     setCarriers(prevCarriers => [...prevCarriers, newCarrier]);
-  //     setNotification({message: 'New carrier successfully added', type: 'success'});
-  //   }
-    
-  //   }catch(e){
-  //     setNotification({message: 'operation failed!', type: 'error'});
-  //   }
-  //   setShowModal(false);
-  // };
-
+    if (formData) {
+      try{
+        const carrierData = {
+          Name_Carrier: formData.Name_Carrier,
+          Street: formData.Street,
+          Number: formData.Building_Number,
+          City: formData.City,
+          Country: formData.Country,
+          };
+          const docId = await addData("Carriers", carrierData);
+          const recordsCarriers = await getData("Carriers");
+          setData(recordsCarriers);
+          handleCloseModal();
+          setCarriers(prevCarriers => [...prevCarriers, carrierData]);
+        
+        }catch(e){
+          console.error(e)
+        }
+      }
+    }
   
+
+  //getData
   useEffect(() => {
     const fetchData = async () => {
       try {
         const records = await getData("BusinessEntities");
         setCompany(records);
 
-        console.log(records);
+        const carrierRecords = await getData("Carriers");
+        setCarriers(carrierRecords);
       } catch (error) {
         console.error(error);
       }
@@ -90,21 +112,24 @@ const CmrSettings = () => {
     fetchData();
   }, []);
 
-  if (!company) {
-    return <div>Loading...</div>;
-  }
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
+
+  // const handleEditCarrier = (carrier) => {
+  //   setFormData(carrier);
+  //   setShowModal(true);
+  // }
   return (
     <div className="w-full">
       <div className="flex flex-col px-3 py-4">
@@ -121,17 +146,17 @@ const CmrSettings = () => {
         </div>
         <dl className="divide-y divide-gray-100">
           <Details title="Name company" value={company[0]?.Company_Name} />
-          <Details title="Second name company" value={company[0]?.Second_Name} />
+          <Details
+            title="Second name company"
+            value={company[0]?.Second_Name}
+          />
           <Details title="Street" value={company[0]?.Street} />
           <Details title="Number" value={company[0]?.Building_Number} />
           <Details title="Zipcode" value={company[0]?.Zipcode} />
           <Details title="City" value={company[0]?.City} />
           <Details title="Country" value={company[0]?.Country} />
         </dl>
-        
 
-          
-       
         <div className="flex justify-between py-8 border-b border-gray-300">
           <span>Branding</span>
           <div>
@@ -154,7 +179,7 @@ const CmrSettings = () => {
               <Modal isOpen={showModal} onClose={handleCloseModal}>
                 <Form>
                   <Title tag="h4">Additing new carrier</Title>
-                 
+
                   <Input
                     type="text"
                     name="Name_Carrier"
@@ -173,10 +198,10 @@ const CmrSettings = () => {
                   />
                   <Input
                     type="text"
-                    name="Number"
+                    name="Building_Number"
                     icon={FaTruck}
                     label="Number"
-                    value={formData?.Number}
+                    value={formData?.Building_Number}
                     onChange={handleInputChange}
                   />
                   <Input
@@ -200,27 +225,33 @@ const CmrSettings = () => {
                   </Button>
                 </Form>
               </Modal>
-              
+
             </div>
           </form>
         </div>
-        
+
         <ul className="divide-y divide-gray-100">
           {carriers ? (
-            carriers.map((carrier, index) => (
-              <li key={index} className="px-4 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                <span className="text-sm font-medium leading-6 text-gray-900 mb-2 sm:mb-0">{carrier.Name_Carrier}</span>
-                <Button onClick={() => handleAddCarrier(carrier)} className="text-sm leading-6 text-gray-700"><RiEdit2Fill /></Button>
+            carriers?.map((carrier, index) => (
+              <li
+                key={index}
+                className="px-4 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+              >
+                <span className="text-sm font-medium leading-6 text-gray-900 mb-2 sm:mb-0">
+                  {carrier?.Name_Carrier}
+                </span>
+                <Button
+                  // onClick={() => handleEditCarrier(carrier)}
+                  className="text-sm leading-6 text-gray-700"
+                >
+                  edit
+                </Button>
               </li>
             ))
           ) : (
             <div>Loading...</div>
           )}
         </ul>
-        
-
-
-        
       </div>
       <Notification message={notification.message} type={notification.type} />
     </div>

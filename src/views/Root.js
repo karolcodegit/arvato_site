@@ -19,28 +19,34 @@ function Content() {
 
   const toggleSidebar = () => {
     showSetSidebar(!showSidebar);
-  } 
+  };
 
   return (
     <div className="w-full h-screen flex justify-between leading-default">
-        <Sidebar showSidebar={showSidebar} toggle={toggle} setToggle={setToggle}/>
-        <main className="w-full min-h-full xl:ml-60 transition-all duration-500 ease-in-out rounded-xl p-6">
-          <div className="flex flex-col">
-            <Header toggleSidebar={toggleSidebar} toggle={toggle}/>
-            <div className="w-full px-6 py-6 mx-auto h-screen">
-              <Routes>
-                {menu.map((route, index) => (
+      <Sidebar
+        showSidebar={showSidebar}
+        toggle={toggle}
+        setToggle={setToggle}
+      />
+      <main className="w-full min-h-full xl:ml-60 transition-all duration-500 ease-in-out rounded-xl p-6">
+        <div className="flex flex-col">
+          <Header toggleSidebar={toggleSidebar} toggle={toggle} />
+          <div className="w-full px-6 py-6 mx-auto h-screen">
+            <Routes>
+              {menu.flatMap((group, index) =>
+                group.routes.map((route, routeIndex) => (
                   <Route
-                    key={index}
+                    key={`${index}-${routeIndex}`}
                     path={route.path}
                     element={<route.component data={null} />}
                   />
-                ))}
-              </Routes>
-            </div>
+                ))
+              )}
+            </Routes>
           </div>
-        </main>
-        <Cookies show={cookies} onClose={() => setCookies(!cookies)} />
+        </div>
+      </main>
+      <Cookies show={cookies} onClose={() => setCookies(!cookies)} />
     </div>
   );
 }

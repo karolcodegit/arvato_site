@@ -8,16 +8,75 @@ import ListTransport from '../views/ListTransport/ListTransport';
 import EditForm from '../components/EditForm/EditForm';
 
 import Users from '../views/Users/Users';
-import { HomeIcon, ListTransportIcon, PrintLabelIcon, ProfileIcon, ReprintLabelIcon, SettingsIcon, UsersIcon } from '../components/Common/Icons/Icons';
+import { DashboardIcon, DocumentIcon, OtherIcon, OrderIcon, ListTransportIcon, PrintLabelIcon, ProfileIcon, ReprintLabelIcon, SettingsIcon, UsersIcon, Documentation } from '../components/Common/Icons/Icons';
 
 
 export const menu = [
-    {path: '/', title: 'Home', icon: <HomeIcon />, component: HomePage, showInSidebar: true },
-    {path: '/users', title: 'Users', icon: <UsersIcon />, component: Users, showInSidebar: true },
-    {path: '/printlabel', title: 'Print label', icon: <PrintLabelIcon />, component: PrintLabel, showInSidebar: true },
-    {path: '/reprintlabel', title: 'Reprint label', icon: <ReprintLabelIcon />, component: ReprintLabel, showInSidebar: true },
-    {path: '/listTransport', title: 'List Transport', icon: <ListTransportIcon />, component: ListTransport, showInSidebar: true},
-    {path: '/listTransport/:id', title: 'Edit transport', icon: <ListTransportIcon />, component: EditForm, showInSidebar: false},
-    {path: '/profile', title: 'Profile', icon: <ProfileIcon />, component: Profile, showInSidebar: true },
-    {path: '/settings', title: 'Settings', icon: <SettingsIcon />, component: Settings, showInSidebar: true},
+    {
+        title: 'Dashboard',
+        icon: <DashboardIcon />,
+        routes: [
+            {path: '/', title: 'Home', component: HomePage, showInSidebar: true },
+        ]
+    },
+    {
+        title: 'Users',
+        icon: <UsersIcon />,
+        routes: [
+            {path: '/users', title: 'Users' , component: Users, showInSidebar: true },
+        ]
+    },
+    {
+        title: 'Applications',
+        icon: <PrintLabelIcon />,
+        routes: [
+            {path: '/printlabel', title: 'Print label', component: PrintLabel, showInSidebar: true },
+            {path: '/reprintlabel', title: 'Reprint label', component: ReprintLabel, showInSidebar: true },
+            
+        ]
+    },
+    {
+        title: 'Transport',
+        icon: <ListTransportIcon />,
+        routes: [
+            {path: '/listTransport', title: 'List Transport',  component: ListTransport, showInSidebar: true},
+            {path: '/listTransport/:id', title: 'Edit transport',  component: EditForm, showInSidebar: false},
+        ]
+    },
+    {
+        title: 'Orders',
+        icon: <OrderIcon />,
+        routes: [
+            {path: '/listTransport', title: 'List Transport',  component: ListTransport, showInSidebar: true},
+            {path: '/listTransport/:id', title: 'Edit transport',  component: EditForm, showInSidebar: false},
+        ]
+    },
+    {
+        title: 'Invoices',
+        icon: <DocumentIcon />,
+        routes: [
+            {path: '/listTransport', title: 'List Transport',  component: ListTransport, showInSidebar: true},
+            {path: '/listTransport/:id', title: 'Edit transport',  component: EditForm, showInSidebar: false},
+        ]
+    },
+    {
+        title: 'Others',
+        icon: <OtherIcon />,
+        routes: [
+            {path: '/profile', title: 'Profile', component: Profile, showInSidebar: true },
+            {path: '/settings', title: 'Settings', component: Settings, showInSidebar: true},
+        ]
+    },
+    {
+        title: 'Documentation',
+        icon: <Documentation />,
+        routes: [
+            {path: '/profile', title: 'Profile', component: Profile, showInSidebar: true },
+            {path: '/settings', title: 'Settings', component: Settings, showInSidebar: true},
+        ]
+    }
+
+
+
+   
 ]

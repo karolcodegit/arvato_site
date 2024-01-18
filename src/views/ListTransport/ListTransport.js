@@ -12,6 +12,7 @@ import Box from "../../components/Box/Box";
 // import { list_carriers } from "../../data/ListCarriers";
 import { addData, getData } from "../../services/firebase/database";
 import Notification from "../../components/Common/Notification/Notification";
+import { PlusIcon } from "../../components/Common/Icons/Icons";
 
 const ListTransport = () => {
   const columns = useMemo(
@@ -119,7 +120,8 @@ const ListTransport = () => {
       <Box col>
         <div className="p-6 pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between items-center">
           <Title tag="h5">List transport</Title>
-          <Button onClick={onAddButtonClick}>Add truck</Button>
+         
+          <Button onClick={onAddButtonClick}> <PlusIcon className='mr-4 w-4 h-4 font-bold' />Add truck</Button>
         </div>
       </Box>
       <Table columns={columns} data={data} showActions={true} onEdit={handleEdit}/>

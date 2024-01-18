@@ -231,7 +231,7 @@ const EditForm = () => {
 
                 <div className="flex w-full">
                   <Button
-                    bg="bg-green-700"
+                    
                     type="submit"
                     className="grow mx-3 mt-4"
                     onClick={handleSave}
@@ -260,7 +260,6 @@ const EditForm = () => {
                       </Title>
                       <div className="w-full flex space-x-2">
                         <Button
-                          bg="bg-red-700"
                           className="mt-8 flex-grow"
                           onClick={() => handleDelete(id)}
                         >

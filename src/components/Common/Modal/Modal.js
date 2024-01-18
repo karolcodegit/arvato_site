@@ -1,5 +1,6 @@
 import React from "react";
-import { IoCloseSharp } from "react-icons/io5";
+import { CloseIcon } from "../Icons/Icons";
+
 
 const Modal = ({isOpen, onClose, children}) => {
     if(!isOpen) return null;
@@ -11,7 +12,7 @@ const Modal = ({isOpen, onClose, children}) => {
         <div className="relative py-8 px-5 md:px-10 bg-white dark:bg-slate-850 rounded-lg shadow-lg border border-gray">
             <div className="w-full flex justify-start text-gray mb-3">
                 <button className="cursor-pointer absolute top-0 right-0 mt-5 mr-5 text-grayLight hover:text-grayDark transition duration-200 ease-in-out" aria-label="close modal" role='button'>
-                    <IoCloseSharp onClick={onClose}/>
+                    <CloseIcon onClick={onClose} className='w-4 h-4'/>
                 </button>
                 {children}
             </div>

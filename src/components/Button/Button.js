@@ -12,14 +12,22 @@ const Button = ({
   className = "",
   ...props
 }) => {
-  const buttonStyle = `text-sm py-2 px-3  font-bold rounded-lg border-0 transition duration-200 ease-in-out ${bg} ${textColor} ${width} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white hover:bg-gray-700 active:bg-gray-800 ${className}`;
-
+  if(children == 'Save'){
+    bg= 'bg-green-700'
+  }
+  if(children === 'Delate' && children === 'Yes'){
+    bg='bg-red-500'
+  }
+  
+  const buttonStyle = `${bg} ${width} ${textColor} inline-flex items-center justify-center relative outline-none border-none m-0 cursor-pointer text-white text-sm leading-5 px-6 py-4 box-shadow-none font-bold rounded-md hover:bg-indigo-900 transition `;
+  
   return (
     <button
       type={type}
       onClick={onClick}
-      className={buttonStyle}
+      bg={bg}
       disabled={disabled}
+      className={`${buttonStyle} ${className}`}
       {...props}
     >
       {children}
