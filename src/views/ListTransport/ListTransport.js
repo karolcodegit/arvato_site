@@ -8,7 +8,7 @@ import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/Table/Table";
 import Box from "../../components/Box/Box";
-import { list_carriers } from "../../data/ListCarriers";
+import { list_carriers } from "../../components/Data/ListCarriers";
 import { addData, getData } from "../../services/firebase/database";
 import Notification from "../../components/Common/Notification/Notification";
 import { PlusIcon } from "../../components/Common/Icons/Icons";
