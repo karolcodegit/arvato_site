@@ -7,4 +7,5 @@ export const list_carriers = [
     {carrier: 'TNT', id: 6},
     {carrier: 'DACHSER', id: 7},
     {carrier: 'DPD', id: 8},
+    {carrier: 'GLS', id: 9},
 ]
