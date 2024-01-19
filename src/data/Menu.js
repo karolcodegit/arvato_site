@@ -6,9 +6,10 @@ import Profile from '../views/Profile/Profile';
 import Settings from '../views/Settings/Settings';
 import ListTransport from '../views/ListTransport/ListTransport';
 import EditForm from '../components/EditForm/EditForm';
+import Report from '../views/Report/Report';
 
 import Users from '../views/Users/Users';
-import { DashboardIcon, DocumentIcon, OtherIcon, OrderIcon, ListTransportIcon, PrintLabelIcon, ProfileIcon, ReprintLabelIcon, SettingsIcon, UsersIcon, Documentation } from '../components/Common/Icons/Icons';
+import { DashboardIcon, DocumentIcon, OtherIcon, OrderIcon, ListTransportIcon, PrintLabelIcon, UsersIcon, Documentation, ReportIcon } from '../components/Common/Icons/Icons';
 
 
 export const menu = [
@@ -73,6 +74,13 @@ export const menu = [
         routes: [
             {path: '/profile', title: 'Profile', component: Profile, showInSidebar: true },
             {path: '/settings', title: 'Settings', component: Settings, showInSidebar: true},
+        ]
+    },
+    {
+        title: 'Report',
+        icon: <ReportIcon />,
+        routes: [
+            {path: '/report', title: 'Report IT', component: Report, showInSidebar: true },
         ]
     }
 

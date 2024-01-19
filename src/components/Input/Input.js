@@ -53,6 +53,7 @@ const Input = ({
             className={`text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full py-3 pl-2 text-sm border-gray-300 rounded ${className}`}
             value={value}
             onChange={handleSelectChange}
+          
           >
             {options.map((option, index) => (
               <option key={index} value={option}>
@@ -70,6 +71,7 @@ const Input = ({
             value={value}
             onChange={onChange}
             checked={checked}
+            
           />
         )}
       </div>

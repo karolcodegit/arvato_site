@@ -25,7 +25,7 @@ const Profile = () => {
             <dl className="divide-y divide-gray-100">
               <Details title="Full name" value={`${userDetails.Name} ${userDetails.Surname}`} />
               <Details title="Email address" value={currentUser.email} />
-              <Details title="Group" value={userDetails.Group} />
+              <Details title="Role" value={userDetails.Role} />
             </dl>
             </div>
           </div>

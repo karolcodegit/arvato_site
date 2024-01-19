@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-// import UniversalTable from "../../components/UniversalTable/UniversalTable";
-import Button, { EditButton } from "../../components/Button/Button";
+import React, { useEffect, useMemo, useState } from "react";
+import Button from "../../components/Button/Button";
 import Title from "../../components/Common/Title/Title";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
@@ -9,12 +8,18 @@ import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import Table from "../../components/Table/Table";
 import Box from "../../components/Box/Box";
-// import { list_carriers } from "../../data/ListCarriers";
+import { list_carriers } from "../../data/ListCarriers";
 import { addData, getData } from "../../services/firebase/database";
 import Notification from "../../components/Common/Notification/Notification";
 import { PlusIcon } from "../../components/Common/Icons/Icons";
+import StatusCell from "../../components/Common/StatusCell/StatusCell";
+import { Controller, useForm } from 'react-hook-form';
 
 const ListTransport = () => {
+  const { register, handleSubmit, errors, control } = useForm();
+
+  const onSubmit = data => console.log(data);
+
   const columns = useMemo(
     () => [
       {
@@ -40,10 +45,16 @@ const ListTransport = () => {
       {
         Header: "Status",
         accessor: "Status",
+        Cell: ({cell: {value}}) => <StatusCell status={value} />
       },
       {
-        Header: "Pager",
-        accessor: "Pager",
+        Header: 'Actions',
+        accessor: 'actions',
+        Cell: ({ row }) => (
+          <button onClick={() => handleEdit(row.original.id)}>
+            Edit
+          </button>
+        )
       },
     ],
     []
@@ -53,7 +64,7 @@ const ListTransport = () => {
   const [newRow, setNewRow] = useState({
     Carrier: 'DHL',
     Date: new Date().toLocaleDateString('en-GB'),
-    Status: 'waiting',
+    Status: 'Waiting',
     Pallets: '',
     Seal: '',
     Departure: '',
@@ -119,43 +130,57 @@ const ListTransport = () => {
     {notification && <Notification message={notification.message} type={notification.type} />}
       <Box col>
         <div className="p-6 pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between items-center">
-          <Title tag="h5">List transport</Title>
-         
+          <Title tag="h3">List transport</Title>
+        
           <Button onClick={onAddButtonClick}> <PlusIcon className='mr-4 w-4 h-4 font-bold' />Add truck</Button>
         </div>
       </Box>
       <Table columns={columns} data={data} showActions={true} onEdit={handleEdit}/>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Title tag="h4">Additing new track</Title>
           <Input
             type="select"
             name="Carrier"
             icon={FaTruck}
             label="Carrier"
-            // options={list_carriers.map((carrier) => carrier.carrier)}
+            options={list_carriers.map((carrier) => carrier.carrier)}
             onChange={handleInputChange}
           />
-          <Input
-            type="text"
-            name="Carrier_Number"
-            icon={FaTruck}
-            label="Carrier Number"
-            onChange={handleInputChange}
-          />
+          
+          <Controller
+              name="Carrier_Number"
+              control={control}
+              rules={{ required: 'Carrier Number is required' }}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  icon={FaTruck}
+                  label="Carrier Number"
+                  {...field}
+                />
+              )}
+            />
+
+          
           <Input
             type="text"
             name="License_Truck"
             icon={FaTruck}
             label="License Truck"
-            onChange={handleInputChange}
+            
+            
           />
+
+          
+
           <Input
             type="text"
             name="License_Trailer"
             icon={FaTruck}
             label="License Trailer"
             onChange={handleInputChange}
+            
           />
           <Input
             type="text"
@@ -163,6 +188,7 @@ const ListTransport = () => {
             icon={FaTruck}
             label="Number of pager"
             onChange={handleInputChange}
+            
           />
           <Button className="mt-8" onClick={handleSaveRecord}>
             Save

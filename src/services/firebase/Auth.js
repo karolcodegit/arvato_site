@@ -14,8 +14,6 @@ import Loading from "../../components/Loading/Loading";
 export const AuthContext = createContext(null);
 const db = getFirestore(app);
 
-console.log(db);
-
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userDetails, setUserDetails] = useState(null);

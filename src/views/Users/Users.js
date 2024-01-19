@@ -1,9 +1,7 @@
-import React, { useContext, useState } from "react";
-import { CiSearch } from "react-icons/ci";
+import React, { useContext, useMemo, useState } from "react";
 import Button from "../../components/Button/Button";
 import Title from "../../components/Common/Title/Title";
 import Input from "../../components/Input/Input";
-import UniversalTable from "../../components/UniversalTable/UniversalTable";
 import Box from "../../components/Box/Box";
 import { UsersContext } from "../../services/firebase/users";
 import Modal from "../../components/Common/Modal/Modal";
@@ -11,9 +9,32 @@ import Form from "../../components/Form/Form";
 import { addUser } from "../../services/firebase/registerUster";
 import { DepartmentIcon, KeyIcon, PlusIcon, UserIcon } from "../../components/Common/Icons/Icons";
 import Notification from "../../components/Common/Notification/Notification";
+import Table from "../../components/Table/Table";
+import StatusCell from "../../components/Common/StatusCell/StatusCell";
 
 const Users = () => {
-  const headers = ["Name", "Surname", "Department", "Group"];
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "Name",
+      },
+      {
+        Header: "Surname",
+        accessor: "Surname",
+      },
+      {
+        Header: "Department",
+        accessor: "Department",
+      },
+      {
+        Header: "Role",
+        accessor: "Role",
+        Cell: ({cell: {value}}) => <StatusCell status={value} />
+      },
+    ],
+    []
+  );
   const users = useContext(UsersContext);
   const [showModal, setShowModal] = useState(false);
   const [notification, setNotification] = useState({ message: '', type: '' });
@@ -24,17 +45,11 @@ const Users = () => {
   const [password, setPassword] = useState("admin123");
 
   const departments = [{ id: 1, name: "DC15" } ];
-  const groups = [
+  const roles = [
     { id: 1, name: "Admin" },
     { id: 2, name: "Normal" },
   ];
 
-  const selectUsers = users.map((user) => ({
-    Name: user.Name,
-    Surname: user.Surname,
-    Department: user.Department,
-    Group: user.Group,
-  }));
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -97,17 +112,8 @@ const Users = () => {
             </Button>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-8 mb-8">
-          <div></div>
-          <div className="w-full md:w-72">
-            <div className="relative w-full">
-              <Input icon={CiSearch} type="text" placeholder="Search" />
-            </div>
-          </div>
-        </div>
       </Box>
-      <UniversalTable headers={headers} data={selectUsers} />
-
+      <Table columns={columns} data={users} role={roles}/>
       {showModal && (
         <Modal isOpen={showModal} onClose={closeModal}>
           <Form>
@@ -136,10 +142,10 @@ const Users = () => {
             />
             <Input
               type="select"
-              name="Group"
+              name="Role"
               // icon={FaTruck}
               label="Group"
-              options={groups.map((group) => group.name)}
+              options={roles.map((role) => role.name)}
               onChange={handleInputChange}
             />
             <Input

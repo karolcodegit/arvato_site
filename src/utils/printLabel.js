@@ -7,18 +7,20 @@ export const printLabel = () => {
       const imgData = canvas.toDataURL("image/png");
   
       // Ustawienie rozmiaru strony na 76.2 mm x 25.4 mm (3x1 cala) z orientacją poziomą
-      const pdf = new jsPDF("l", "mm", [76.2, 25.4]);
+      const pdf = new jsPDF("l", "mm", [26.2, 15.4]);
   
      // Obliczenie skali obrazu do rozmiarów strony PDF
+     const targetWidth = 15; // 10 cm
+      const targetHeight = 7; // 3.5 cm
      const imgProps = pdf.getImageProperties(imgData);
      const pdfWidth = pdf.internal.pageSize.getWidth();
      const pdfHeight = pdf.internal.pageSize.getHeight();
-     const widthScale = (pdfWidth - 2) / imgProps.width; // subtract margins
-     const heightScale = (pdfHeight - 4) / imgProps.height; // subtract margins
+     const widthScale = targetWidth / imgProps.width;
+    const heightScale = targetHeight / imgProps.height;
      const scale = Math.min(widthScale, heightScale);
  
      const scaledWidth = imgProps.width * scale;
-     const scaledHeight = imgProps.height * scale;
+      const scaledHeight = imgProps.height * scale;
  
       // Obliczenie pozycji x i y, które umieszczą obraz na środku strony
     const x = (pdfWidth - scaledWidth) / 2;

@@ -1,14 +1,10 @@
 import React from "react";
-import { IoSettingsOutline } from "react-icons/io5";
-import { AiFillHome } from "react-icons/ai";
-import { BiPrinter } from "react-icons/bi";
-import { FaCarSide, FaUsers, FaKey, FaPager, FaTrailer } from "react-icons/fa";
+import { FaCarSide, FaKey, FaPager, FaTrailer } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { FcPrint } from "react-icons/fc";
-import { IoIosNotificationsOutline, IoMdLogOut } from "react-icons/io";
+import { IoMdLogOut } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
 import { RxUpdate } from "react-icons/rx";
-import { FcDepartment } from "react-icons/fc";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { FaTruck, FaTruckFront } from "react-icons/fa6";
 import { LiaPalletSolid } from "react-icons/lia";
@@ -16,9 +12,6 @@ import { PiPackage } from "react-icons/pi";
 import { GiWeight } from "react-icons/gi";
 import { BsCalendar2Date, BsSortUp } from "react-icons/bs";
 import { GoSortDesc } from "react-icons/go";
-import { FaAngleDown } from "react-icons/fa";
-import { FaAngleUp } from "react-icons/fa";
-import { HomeModernIcon } from "@heroicons/react/24/outline";
 
 export const CloseIcon = ({className, onClick}) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className} onClick={onClick}>
 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -137,7 +130,10 @@ export const NotificationIcon = (props) => (
 );
 export const UserIcon = (props) => <CiUser {...props} />;
 export const UpdateIcon = (props) => <RxUpdate {...props} />;
-export const DepartmentIcon = (props) => <FcDepartment {...props} />;
+export const DepartmentIcon = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+<path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+</svg>
+;
 export const KeyIcon = (props) => <FaKey {...props} />;
 export const EmailIcon = (props) => <MdOutlineAlternateEmail {...props} />;
 export const TruckIcon = (props) => <FaTruck {...props} />;
@@ -277,6 +273,13 @@ export const SearchIcon = ({className}) => (
   </svg>
   
 );
+
+export const ReportIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" >
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+</svg>
+
+)
 
 // export const EditIcon = (props) => <MdEdit {...props} />;
 // export const DeleteIcon = (props) => <MdDelete {...props} />;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "../Box/Box";
 import Form from "../Form/Form";
 import Title from "../Common/Title/Title";
@@ -7,11 +7,6 @@ import Button from "../Button/Button";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { generatePdf } from "../generatorCmr/generatorCmr";
-import { FaPager } from "react-icons/fa";
-import { FaTrailer } from "react-icons/fa";
-import { FaTruckFront } from "react-icons/fa6";
-import { TransportContext } from "../../services/context/TransportContext/TransportContext";
-import { deleteRecord, updateRecord } from "../../services/airtable/api";
 import Modal from "../Common/Modal/Modal";
 import {
   CalendarIcon,
@@ -97,7 +92,10 @@ const EditForm = () => {
         <div className="w-full flex items-center justify-center ">
           <div className="lg:flex items-center grow">
             <div className="w-full mt-8 mx-auto px-16 py-8 rounded-lg">
+              <div className="flex justify-between items-center">
               <Title tag="h3">Edit transport</Title>
+              <Button onClick={() => navigation(`/listTransport`)}>Back</Button>
+              </div>
               <Form
                 onSubmit={(e) => {
                   e.preventDefault();
