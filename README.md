@@ -35,3 +35,11 @@ Zaimplementowane zostało logowanie w celu zabezpieczenia danych oraz wykrycia b
 
 Moim celem jest sworzenie programu, który będzie zawierał wszystkie informacje o magazynie. Zmniejszenie ilości narzędzi, z której korzystają pracownicy. Jeden portal, a tak dużo możliwości...
  
+![enter image description here](https://github.com/karolcodegit/arvato_site/blob/main/src/assets/panel/Screenshot%202024-01-24%20at%2010.35.52.png)
+
+
+![enter image description here](https://github.com/karolcodegit/arvato_site/blob/main/src/assets/panel/Screenshot%202024-01-24%20at%2010.36.28.png)
+
+![enter image description here](https://github.com/karolcodegit/arvato_site/blob/main/src/assets/panel/Screenshot%202024-01-24%20at%2010.37.00.png)
+
+![enter image description here](https://github.com/karolcodegit/arvato_site/blob/main/src/assets/panel/Screenshot%202024-01-24%20at%2010.37.50.png)
