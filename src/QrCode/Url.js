@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SelectForm from "../components/SelectForm/SelectForm";
-import Input from "../components/Input/Input";
+import TextInput from "../components/Common/TextInput/TextInput";
+import Select from "../components/Common/Select/Select";
 
 const Url = ({
   codeType,
@@ -27,19 +28,19 @@ const Url = ({
 
   return (
     <>
-      <SelectForm
+      <Select
         label="Select Code"
         value={codeType}
         onChange={handleSelectChange}
         options={selectCode}
       />
-      <SelectForm
+      <Select
         label="With text?"
         value={showText}
         onChange={handleTextShow}
         options={withText}
       />
-      <Input
+      <TextInput
         label="Text"
         type="text"
         placeholder="Text"

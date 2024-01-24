@@ -7,7 +7,7 @@ import Logo from "../../Common/Logo/Logo";
 const Sidebar = ({ toggleSidebar, showSidebar, toggle, setToggle }) => {
   return (
     <aside
-      className={`fixed xl:fixed max-w-xl:absolute  z-50 ${
+      className={`fixed xl:fixed max-w-xl:absolute z-50 ${
         toggle ? "w-[5rem]" : "w-[15rem]"
       } sidebar-container xl:flex flex-col justify-between ${
         showSidebar ? "translate-x-0" : "-translate-x-full"

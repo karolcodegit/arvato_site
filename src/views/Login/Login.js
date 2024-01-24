@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { EmailIcon, KeyIcon } from "../../components/Common/Icons/Icons";
+import TextInput from "../../components/Common/TextInput/TextInput";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Login = () => {
         </div>
 
         <form className="mt-8 space-y-4" onSubmit={handleLogin}>
-          <Input
+          <TextInput
             type="email"
             label="Login"
             icon={EmailIcon}
@@ -44,7 +44,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             white
           />
-          <Input
+          <TextInput
             type="password"
             label="Password"
             icon={KeyIcon}

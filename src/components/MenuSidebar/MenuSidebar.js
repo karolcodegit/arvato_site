@@ -24,14 +24,20 @@ const MenuSidebar = ({ toggle }) => {
             >
               <div className="flex items-center align-middle ">
                 {group.icon}
-                <span className="ml-3">{group.title}</span>
+                <span className={`${toggle ? "hidden" : "ml-3"}`}>
+                  {group.title}
+                </span>
               </div>
               <div>
-                {expandedGroup === group.title ? (
-                  <UpIcon className="h-4 w-4 text-gray-300" />
-                ) : (
-                  <DownIcon className="h-4 w-4 text-gray-300" />
-                )}
+                {!toggle ? (
+                  expandedGroup === group.title ? (
+                    <UpIcon className="h-4 w-4 text-gray-300" />
+                  ) : (
+                    <DownIcon className="h-4 w-4 text-gray-300" />
+                  )
+                
+                ) : null}
+                
               </div>
             </div>
             {expandedGroup === group.title &&
@@ -40,9 +46,14 @@ const MenuSidebar = ({ toggle }) => {
                   return (
                     <div
                       key={route.title}
-                      className={`flex justify-between items-center relative w-full cursor-pointer text-gray-300 bg-transparent py-3 px-7 align-middle leading-7 rounded-xl text-bold transition-all duration-500 ease-in-out hover:bg-white/10 hover:text-white text-sm ${toggle ? "" : " "}`}
+                      className={`flex justify-between items-center relative w-full cursor-pointer text-gray-300 bg-transparent py-3 px-7 align-middle leading-7 rounded-xl text-bold transition-all duration-500 ease-in-out hover:bg-white/10 hover:text-white text-sm ${
+                        toggle ? "" : " "
+                      }`}
                     >
-                      <Link to={route.path} className="w-full flex items-center text-center pl-7">
+                      <Link
+                        to={route.path}
+                        className="w-full flex items-center text-center pl-7"
+                      >
                         <div className={`${toggle ? "hidden" : ""}`}>
                           {route.title}
                         </div>

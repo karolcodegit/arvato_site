@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import Switch from "../Switch/Switch";
+import Switch from "../Common/Switch/Switch";
 import { IoIosArrowForward } from "react-icons/io";
-import { AppThemeContext } from "../../themes/AppThemeContext";
+import { AppThemeContext } from "../../contexts/themes/AppThemeContext";
 
 const AppearanceSettings = () => {
   const { theme, toggleTheme } = useContext(AppThemeContext);

@@ -2,72 +2,30 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import Button from "../Button/Button";
 import Modal from "../Common/Modal/Modal";
-import Input from "../Input/Input";
 import Title from "../Common/Title/Title";
 import Form from "../Form/Form";
 import { FaTruck } from "react-icons/fa6";
 import Notification from "../Common/Notification/Notification";
-import { RiEdit2Fill } from "react-icons/ri";
 import Details from "../Common/SetingsDetailsTable/SetingsDetailsTable";
-import { addData, getData } from "../../services/firebase/database";
-
-
-
-// const CmrSettings = () => {
-//   const [data, setData] = useState([]);
-//   const [showModal, setShowModal] = useState(false);
-//   const [company, setCompany] = useState(null);
-//   const [carriers, setCarriers] = useState(null);
-//   const [formData, setFormData] = useState(null);
-//   const [notification, setNotification] = useState({ message: "", type: "" });
-  
-//     const handleAddCarrier = (carrier) => {
-//       setShowModal(true);
-//     };
-
-//     const handleSave = async () => {
-//     try{
-//       const carrierData = {
-//         Name_Carrier: formData.Name_Carrier,
-//         Street: formData.Street,
-//         Number: formData.Number,
-//         City: formData.City,
-//         Country: formData.Country,
-//         };
-//         const docId = await addData("Carriers", carrierData);
-//         const records = await getData("Carriers");
-//         setDatas(records);
-//         handleCloseModal();
-//         setCarriers(prevCarriers => [...prevCarriers, carrierData]);
-//         setFormData(null);
-       
-//       }catch(e){
-//         console.error(e)
-//       }
-//     }
-  
-
-
-//   return (
-//     <div>CmrSettings</div>
-//   )
-// }
-
-// export default CmrSettings
+import { addData, getData, updateData } from "../../services/firebase/database";
+import TextInput from "../Common/TextInput/TextInput";
+import { Link } from "react-router-dom";
 
 const CmrSettings = () => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [company, setCompany] = useState(null);
-  const [carriers, setCarriers] = useState(null);
+  const [company, setCompany] = useState([]);
+  const [carriers, setCarriers] = useState([]);
+  const [editingCarrier, setEditingCarrier] = useState(null);
   const [formData, setFormData] = useState({
-    Name_Carrier: '',
-    Street: '',
-    Building_Number: '',
-    City: '',
-    Country: '',
+    Name_Carrier: "",
+    Street: "",
+    Building_Number: "",
+    City: "",
+    Country: "",
   });
   const [notification, setNotification] = useState({ message: "", type: "" });
+  const [activeTab, setActiveTab] = useState("Company");
 
   const handleAddCarrier = () => {
     setShowModal(true);
@@ -75,26 +33,41 @@ const CmrSettings = () => {
 
   const handleSave = async () => {
     if (formData) {
-      try{
+      try {
         const carrierData = {
           Name_Carrier: formData.Name_Carrier,
           Street: formData.Street,
-          Number: formData.Building_Number,
+          Building_Number: formData.Building_Number,
           City: formData.City,
           Country: formData.Country,
-          };
+        };
+        if (editingCarrier) {
+          // Update the existing carrier
+          await updateData("Carriers", editingCarrier.id, carrierData);
+          setCarriers(
+            carriers.map((carrier) =>
+              carrier.id === editingCarrier.id ? carrierData : carrier
+            )
+          );
+        } else {
+          // Add a new carrier
           const docId = await addData("Carriers", carrierData);
-          const recordsCarriers = await getData("Carriers");
-          setData(recordsCarriers);
-          handleCloseModal();
-          setCarriers(prevCarriers => [...prevCarriers, carrierData]);
-        
-        }catch(e){
-          console.error(e)
+          setCarriers((prevCarriers) => [...prevCarriers, carrierData]);
         }
+        handleCloseModal();
+        setFormData({
+          Name_Carrier: "",
+          Street: "",
+          Building_Number: "",
+          City: "",
+          Country: "",
+        })
+       
+      } catch (e) {
+        console.error(e);
       }
     }
-  
+  };
 
   //getData
   useEffect(() => {
@@ -112,9 +85,16 @@ const CmrSettings = () => {
     fetchData();
   }, []);
 
-
   const handleCloseModal = () => {
     setShowModal(false);
+    setEditingCarrier(null);
+    setFormData({
+      Name_Carrier: "",
+      Street: "",
+      Building_Number: "",
+      City: "",
+      Country: "",
+    })
   };
 
   const handleInputChange = (e) => {
@@ -125,11 +105,11 @@ const CmrSettings = () => {
     }));
   };
 
-
-  // const handleEditCarrier = (carrier) => {
-  //   setFormData(carrier);
-  //   setShowModal(true);
-  // }
+  const handleEditCarrier = (carrier) => {
+    setFormData(carrier);
+    setEditingCarrier(carrier);
+    setShowModal(true);
+  };
   return (
     <div className="w-full">
       <div className="flex flex-col px-3 py-4">
@@ -140,118 +120,158 @@ const CmrSettings = () => {
           </span>
           <span>CMR</span>
         </div>
-        <div className="py-2 border-b border-gray-300 mt-7">General</div>
-        <div className="py-2 border-b border-gray-300 mt-7">
-          <span className="font-bold">Default settings</span>
-        </div>
-        <dl className="divide-y divide-gray-100">
-          <Details title="Name company" value={company[0]?.Company_Name} />
-          <Details
-            title="Second name company"
-            value={company[0]?.Second_Name}
-          />
-          <Details title="Street" value={company[0]?.Street} />
-          <Details title="Number" value={company[0]?.Building_Number} />
-          <Details title="Zipcode" value={company[0]?.Zipcode} />
-          <Details title="City" value={company[0]?.City} />
-          <Details title="Country" value={company[0]?.Country} />
-        </dl>
 
-        <div className="flex justify-between py-8 border-b border-gray-300">
-          <span>Branding</span>
-          <div>
-            <span>Change logo</span>
+        <div className="py-6">
+          <div className="block">
+            <div className="border-b border-gray-300">
+              <nav className="flex" aria-label="Tabs">
+                <Link
+                  onClick={() => setActiveTab("Company")}
+                  className={`font-medium text-sm py-4 px-1 ${
+                    activeTab === "Company"
+                      ? "text-gray-700 border-b-2 border-blue-500"
+                      : "text-gray-400"
+                  }`}
+                >
+                  Company
+                </Link>
+                <Link
+                  onClick={() => setActiveTab("Carriers")}
+                  className={`font-medium text-sm py-4 px-1 ${
+                    activeTab === "Carriers"
+                      ? "text-gray-700 border-b-2 border-blue-500"
+                      : "text-gray-400"
+                  }`}
+                >
+                  Carriers
+                </Link>
+              </nav>
+            </div>
           </div>
         </div>
-        <div className="py-2 border-b border-gray-300 mt-7">
-          <span className="font-bold">Carriers</span>
-        </div>
-        <div className="py-2 border-b border-gray-300">
-          <form>
-            <div className="flex justify-between">
-              <label>
-                Carrier Name:
-                <input type="text" name="name" />
-              </label>
+
+        {activeTab === "Company" && (
+          <div>
+            <div className="py-2 border-b border-gray-300 mt-7">
+              <span className="font-bold">Default settings</span>
+            </div>
+
+            {company[0] && (
+              <dl className="divide-y divide-gray-100">
+                {company[0].Company_Name && (
+                  <Details
+                    title="Name company"
+                    value={company[0].Company_Name}
+                  />
+                )}
+                {company[0].Second_Name && (
+                  <Details
+                    title="Second name company"
+                    value={company[0].Second_Name}
+                  />
+                )}
+                {company[0].Street && (
+                  <Details title="Street" value={company[0].Street} />
+                )}
+                {company[0].Building_Number && (
+                  <Details title="Number" value={company[0].Building_Number} />
+                )}
+                {company[0].Zipcode && (
+                  <Details title="Zipcode" value={company[0].Zipcode} />
+                )}
+                {company[0].City && (
+                  <Details title="City" value={company[0].City} />
+                )}
+                {company[0].Country && (
+                  <Details title="Country" value={company[0].Country} />
+                )}
+              </dl>
+            )}
+          </div>
+        )}
+
+        {activeTab === "Carriers" && (
+          <div>
+            <div className="py-2 border-b border-gray-300 mt-7 flex justify-between items-center">
+              <span className="font-bold">Carriers</span>
               <Button onClick={handleAddCarrier} bg="bg-gray-700">
                 Add Carrier
               </Button>
+            </div>
+
+            {carriers ? (
+              <ul className="">
+                {carriers.map((carrier, index) => (
+                  <li
+                    key={index}
+                    className="px-4 py-6  flex sm:flex-row justify-between items-start sm:items-center border-b"
+                  >
+                    <span className="text-sm font-medium leading-6 text-gray-900 mb-2 sm:mb-0">{carrier?.Name_Carrier}</span>
+                    <button
+                      onClick={() => handleEditCarrier(carrier)}
+                      className=""
+                    >
+                      edit
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div>Loading...</div>
+            )}
+          </div>
+        )}
+
+        
+          <form>
+            <div className="flex justify-between">
               <Modal isOpen={showModal} onClose={handleCloseModal}>
                 <Form>
-                  <Title tag="h4">Additing new carrier</Title>
+                  <Title tag="h3">Additing new carrier</Title>
 
-                  <Input
-                    type="text"
+                  <TextInput
                     name="Name_Carrier"
                     icon={FaTruck}
                     label="Name carrier"
                     value={formData?.Name_Carrier}
                     onChange={handleInputChange}
                   />
-                  <Input
-                    type="text"
+                  <TextInput
                     name="Street"
                     icon={FaTruck}
                     label="Street"
                     value={formData?.Street}
                     onChange={handleInputChange}
                   />
-                  <Input
-                    type="text"
+                  <TextInput
                     name="Building_Number"
                     icon={FaTruck}
                     label="Number"
                     value={formData?.Building_Number}
                     onChange={handleInputChange}
                   />
-                  <Input
-                    type="text"
+                  <TextInput
                     name="City"
                     icon={FaTruck}
                     label="City"
                     value={formData?.City}
                     onChange={handleInputChange}
                   />
-                  <Input
-                    type="text"
+                  <TextInput
                     name="Country"
                     icon={FaTruck}
                     label="Country"
                     value={formData?.Country}
                     onChange={handleInputChange}
                   />
-                  <Button className="mt-8" onClick={handleSave}>
+                  <Button on className="mt-8" onClick={handleSave}>
                     Save
                   </Button>
                 </Form>
               </Modal>
-
             </div>
           </form>
-        </div>
-
-        <ul className="divide-y divide-gray-100">
-          {carriers ? (
-            carriers?.map((carrier, index) => (
-              <li
-                key={index}
-                className="px-4 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center"
-              >
-                <span className="text-sm font-medium leading-6 text-gray-900 mb-2 sm:mb-0">
-                  {carrier?.Name_Carrier}
-                </span>
-                <Button
-                  // onClick={() => handleEditCarrier(carrier)}
-                  className="text-sm leading-6 text-gray-700"
-                >
-                  edit
-                </Button>
-              </li>
-            ))
-          ) : (
-            <div>Loading...</div>
-          )}
-        </ul>
+        
       </div>
       <Notification message={notification.message} type={notification.type} />
     </div>

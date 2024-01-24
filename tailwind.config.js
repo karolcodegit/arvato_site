@@ -67,7 +67,7 @@ module.exports = withMT({
     },
   },
   variants: {
-    translate: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    translate: ['responsive', 'hover', 'focus', 'active', 'group-hover', 'cursor-not-allowed'],
   },
   plugins: [],
 });

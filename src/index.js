@@ -5,23 +5,27 @@ import { ThemeProvider } from "@material-tailwind/react";
 import App from "./views/Root";
 import "./index.css";
 import "./services/firebase/firebaseConfig";
-import AppThemeProvider from "./themes/AppThemeProvider";
-import { AppThemeContext } from "./themes/AppThemeContext";
-import { TransportProvider } from "./services/context/TransportContext/TransportProvider";
+
+import { AppThemeContext } from "./contexts/themes/AppThemeContext";
+import AppThemeProvider from "./contexts/themes/AppThemeProvider";
+// import { TransportProvider } from "./contexts/transport/TransportProvider";
 import { UsersProvider } from "./services/firebase/users";
+import { SettingsProvider } from "./contexts/settings/SettingsProvider";
 
 const RootComponent = () => {
   return (
     <React.StrictMode>
       <AuthProvider>
         <AppThemeProvider>
-          <TransportProvider>
+          {/* <TransportProvider> */}
+          <SettingsProvider>
             <ThemeProvider>
               <UsersProvider>
                 <App />
               </UsersProvider>
             </ThemeProvider>
-          </TransportProvider>
+            </SettingsProvider>
+          {/* </TransportProvider> */}
         </AppThemeProvider>
       </AuthProvider>
     </React.StrictMode>

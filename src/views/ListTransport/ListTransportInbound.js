@@ -2,23 +2,23 @@ import React, { useEffect, useMemo, useState } from "react";
 import Button from "../../components/Button/Button";
 import Title from "../../components/Common/Title/Title";
 import Form from "../../components/Form/Form";
-import Input from "../../components/Input/Input";
 import { FaTruck } from "react-icons/fa6";
 import Modal from "../../components/Common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import Table from "../../components/Table/Table";
+import Table from "../../components/Common/Table/Table";
 import Box from "../../components/Box/Box";
 import { list_carriers } from "../../components/Data/ListCarriers";
 import { addData, getData } from "../../services/firebase/database";
 import Notification from "../../components/Common/Notification/Notification";
 import { PlusIcon } from "../../components/Common/Icons/Icons";
 import StatusCell from "../../components/Common/StatusCell/StatusCell";
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm } from "react-hook-form";
+import TextInput from "../../components/Common/TextInput/TextInput";
 
-const ListTransport = () => {
+const ListTransportInbound = () => {
   const { register, handleSubmit, errors, control } = useForm();
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data) => console.log(data);
 
   const columns = useMemo(
     () => [
@@ -26,10 +26,7 @@ const ListTransport = () => {
         Header: "Date",
         accessor: "Date",
       },
-      {
-        Header: "Carrier",
-        accessor: "Carrier",
-      },
+
       {
         Header: "Carrier Number",
         accessor: "Carrier_Number",
@@ -45,38 +42,34 @@ const ListTransport = () => {
       {
         Header: "Status",
         accessor: "Status",
-        Cell: ({cell: {value}}) => <StatusCell status={value} />
+        Cell: ({ cell: { value } }) => <StatusCell status={value} />,
       },
       {
-        Header: 'Actions',
-        accessor: 'actions',
+        Header: "Actions",
+        accessor: "actions",
         Cell: ({ row }) => (
-          <button onClick={() => handleEdit(row.original.id)}>
-            Edit
-          </button>
-        )
+          <button onClick={() => handleEdit(row.original.id)}>Edit</button>
+        ),
       },
     ],
     []
   );
 
   const [data, setData] = useState([]);
+
   const [newRow, setNewRow] = useState({
-    Carrier: 'DHL',
-    Date: new Date().toLocaleDateString('en-GB'),
-    Status: 'Waiting',
-    Pallets: '',
-    Seal: '',
-    Departure: '',
-    Package: '',
-    Weight: '',
-    Message: '',
+    Carrier: "DHL",
+    Date: new Date().toLocaleDateString("en-GB"),
+    Status: "Waiting",
+    Pallets: "",
+    Departure: "",
+    Message: "",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const records = await getData("transport");
+        const records = await getData("TransportInbound");
         setData(records);
       } catch (error) {
         console.error(error);
@@ -106,14 +99,14 @@ const ListTransport = () => {
 
   const handleSaveRecord = async () => {
     try {
-      const docId = await addData("transport", newRow);
+      const docId = await addData("TransportInbound", newRow);
       console.log(`New document added with ID: ${docId}`);
-      const records = await getData("transport"); // ponownie pobierz dane
+      const records = await getData("TransportInbound"); // ponownie pobierz dane
       setData(records); // update record
       closeModal();
-      setNotification({ message: 'Created new transport', type: 'success' });
+      setNotification({ message: "Created new transport", type: "success" });
     } catch (e) {
-      setNotification({ message: `Error: ${e.message}`, type: 'error' });
+      setNotification({ message: `Error: ${e.message}`, type: "error" });
     }
   };
 
@@ -122,73 +115,57 @@ const ListTransport = () => {
   };
 
   const handleEdit = (id) => {
-    navigate(`/listTransport/${id}`)
-  }
+    navigate(`/listTransportInbound/${id}`);
+  };
 
   return (
     <>
-    {notification && <Notification message={notification.message} type={notification.type} />}
+      {notification && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
       <Box col>
         <div className="p-6 pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between items-center">
           <Title tag="h3">List transport</Title>
-        
-          <Button onClick={onAddButtonClick}> <PlusIcon className='mr-4 w-4 h-4 font-bold' />Add truck</Button>
+
+          <Button onClick={onAddButtonClick}>
+            {" "}
+            <PlusIcon className="mr-4 w-4 h-4 font-bold" />
+            Add truck
+          </Button>
         </div>
       </Box>
-      <Table columns={columns} data={data} showActions={true} onEdit={handleEdit}/>
+      <Table
+        columns={columns}
+        data={data}
+        showActions={true}
+        onEdit={handleEdit}
+      />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Title tag="h4">Additing new track</Title>
-          <Input
-            type="select"
-            name="Carrier"
-            icon={FaTruck}
-            label="Carrier"
-            options={list_carriers.map((carrier) => carrier.carrier)}
-            onChange={handleInputChange}
-          />
-          
-          <Controller
-              name="Carrier_Number"
-              control={control}
-              rules={{ required: 'Carrier Number is required' }}
-              render={({ field }) => (
-                <Input
-                  type="text"
-                  icon={FaTruck}
-                  label="Carrier Number"
-                  {...field}
-                />
-              )}
-            />
+          <Title tag="h3">Additing new track</Title>
 
-          
-          <Input
-            type="text"
+          <TextInput
+            name="Carrier_Number"
+            icon={FaTruck}
+            label="Carrier Number"
+          />
+
+          <TextInput
             name="License_Truck"
             icon={FaTruck}
             label="License Truck"
-            
-            
           />
-
-          
-
-          <Input
-            type="text"
+          <TextInput
             name="License_Trailer"
             icon={FaTruck}
             label="License Trailer"
             onChange={handleInputChange}
-            
           />
-          <Input
-            type="text"
+          <TextInput
             name="Pager"
             icon={FaTruck}
             label="Number of pager"
             onChange={handleInputChange}
-            
           />
           <Button className="mt-8" onClick={handleSaveRecord}>
             Save
@@ -199,4 +176,4 @@ const ListTransport = () => {
   );
 };
 
-export default ListTransport;
+export default ListTransportInbound;

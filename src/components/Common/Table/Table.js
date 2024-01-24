@@ -1,23 +1,35 @@
 import React from "react";
-import { useTable, useSortBy, usePagination, useGlobalFilter } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  usePagination,
+  useGlobalFilter,
+} from "react-table";
 import { useLocation } from "react-router-dom";
-import { SearchIcon, SortDescIcon } from "../Common/Icons/Icons";
+
 import { BsSortUp } from "react-icons/bs";
-import Box from "../Box/Box";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
-import UserRole from "../Common/UserRole/UserRole";
-import EnterBarcode from "../Common/EnterBarcode/EnterBarcode";
+import Box from "../../Box/Box";
+import { SearchIcon, SortDescIcon } from "../Icons/Icons";
+import Button from "../../Button/Button";
+import TextInput from "../TextInput/TextInput";
+import EnterBarcode from "../EnterBarcode/EnterBarcode";
+import UserRole from "../UserRole/UserRole";
+
+
 
 const Table = ({ data, columns, role, barcodes, setBarcodes }) => {
   const location = useLocation();
   let AddValidate;
 
-  switch(location.pathname){
-    case '/users':
+  switch (location.pathname) {
+    case "/users":
       AddValidate = <UserRole roles={role} />;
-      case '/reprintlabel':
-      // AddValidate = <EnterBarcode barcodes={barcodes} setBarcodes={setBarcodes}/>;
+      break;
+    case "/reprintlabel":
+      AddValidate = (
+        <EnterBarcode barcodes={barcodes} setBarcodes={setBarcodes} />
+      );
+      break;
   }
 
   const {
@@ -41,29 +53,22 @@ const Table = ({ data, columns, role, barcodes, setBarcodes }) => {
     },
     useGlobalFilter,
     useSortBy,
-    usePagination,
+    usePagination
   );
 
   return (
     <>
-    
-    <Box col>
-        
+      <Box col>
         <div className="flex items-center justify-between gap-8">
-          <div>
-              
-               {AddValidate}
-              
-
-          </div>
+          <div>{AddValidate}</div>
           <div className="w-full md:w-72">
             <div className="relative w-full">
-            <Input
-              value={globalFilter || ""}
-              onChange={(e) => setGlobalFilter(e.target.value)}
-              placeholder={`Search all fields`}
-              icon={SearchIcon}
-            />
+              <TextInput
+                value={globalFilter || ""}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+                placeholder={`Search all fields`}
+                icon={SearchIcon}
+              />
             </div>
           </div>
         </div>
@@ -123,9 +128,9 @@ const Table = ({ data, columns, role, barcodes, setBarcodes }) => {
           })}
         </tbody>
       </table>
-      {data.length === 10 && (
-        <div className="px-6 pt-3 border-t border-gray-200">
-          <div className="flex  items-center justify-between mt-4 w-full">
+      {data.length >= 10 && (
+        <Box className="px-6 py-1 mt-3">
+          <div className="flex  items-center justify-between w-full">
             <span className="text-gray-700 text-sm ">
               Page{" "}
               <strong>
@@ -136,14 +141,20 @@ const Table = ({ data, columns, role, barcodes, setBarcodes }) => {
               <Button
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
-                className="first:mr-2 last:ml-2 px-4 py-2 rounded "
+                px = "px-2"
+                py = "py-1"
+                className="mr-1"
+               
               >
                 {"<"}
               </Button>
               <Button
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
-                className="first:mr-2 last:ml-2 px-4 py-2 bg-sky-800 text-white rounded hover:bg-blue-700 "
+                px = "px-2"
+                py = "py-1"
+                className="ml-1"
+
               >
                 {">"}
               </Button>
@@ -163,7 +174,7 @@ const Table = ({ data, columns, role, barcodes, setBarcodes }) => {
               ))}
             </select> */}
           </div>
-        </div>
+        </Box>
       )}
     </>
   );

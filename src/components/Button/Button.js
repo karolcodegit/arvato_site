@@ -9,6 +9,8 @@ const Button = ({
   width = "w-auto",
   type = "button",
   disabled = false,
+  px= 'px-6',
+  py= 'py-3',
   className = "",
   ...props
 }) => {
@@ -19,7 +21,7 @@ const Button = ({
     bg='bg-red-500'
   }
   
-  const buttonStyle = `${bg} ${width} ${textColor} inline-flex items-center justify-center relative outline-none border-none m-0 cursor-pointer text-white text-sm leading-5 px-6 py-3 box-shadow-none font-bold rounded-md hover:bg-indigo-900 transition `;
+  const buttonStyle = `${bg} ${width} ${textColor} ${px} ${py} inline-flex items-center justify-center relative outline-none border-none m-0 cursor-pointer text-white text-sm leading-5  box-shadow-none font-bold rounded-md hover:bg-indigo-900 transition `;
   
   return (
     <button

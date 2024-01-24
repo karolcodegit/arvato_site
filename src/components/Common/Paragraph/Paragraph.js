@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Paragraph = ({children}) => {
+const Paragraph = ({children, className, textSize, fontBold}) => {
   return (
-    <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+    <p className={`block font-sans ${textSize ? textSize : 'text-sm'} antialiased ${fontBold? fontBold : 'font-normal'} leading-normal text-blue-gray-900 ${className}`}>
         {children}
     </p>
   )

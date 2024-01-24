@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../services/firebase/Auth";
 import Box from "../../components/Box/Box";
 import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
 import Form from "../../components/Form/Form";
 import team1 from "../../assets/images/team-1.jpg";
 import Title from "../../components/Common/Title/Title";

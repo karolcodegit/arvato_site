@@ -9,7 +9,7 @@ const Logo = ({toggleSidebar,toggle }) => {
             src="https:tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=500"
             alt="Your Company"
         />
-        <Title tag="h3" white className={`${toggle ? 'text-sm' : ''}`}>CodeCraft</Title>
+        <Title tag="h3" white className={`${toggle ? 'hidden' : ''}`}>CodeCraft</Title>
     </div>
   )
 }

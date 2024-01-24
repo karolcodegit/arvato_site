@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SelectForm from "../components/SelectForm/SelectForm";
-import Input from "../components/Input/Input";
 import zoneU from '../components/LayoutLabel/zoneU'
 import zoneFH from '../components/LayoutLabel/zoneFH'
+import TextInput from "../components/Common/TextInput/TextInput";
+import Select from "../components/Common/Select/Select";
 
 const Location = ({ zone, setZone, location1, setLocation1, location2, setLocation2, location3, setLocation3, setLayout }) => {
   
@@ -39,12 +40,12 @@ const Location = ({ zone, setZone, location1, setLocation1, location2, setLocati
 
   return (
     <>
-      <SelectForm
+      <Select
         value={zone}
         onChange={(e) => setZone(e.target.value)}
         options={zoneZone}
       />
-      <Input
+      <TextInput
         min="1"
         max="250"
         maxLength="3"
@@ -54,7 +55,7 @@ const Location = ({ zone, setZone, location1, setLocation1, location2, setLocati
           
           
       />
-      <Input
+      <TextInput
         min="1"
         max="250"
         maxLength="3"
@@ -62,7 +63,7 @@ const Location = ({ zone, setZone, location1, setLocation1, location2, setLocati
         value={location2}
         onChange={(e) => handleChangeInput2(e)}
       />
-      <Input
+      <TextInput
         min="100"
         max="500"
         maxLength="3"

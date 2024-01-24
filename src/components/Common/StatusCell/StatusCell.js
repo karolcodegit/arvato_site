@@ -3,9 +3,14 @@ const StatusCell = ({ status }) => {
     if(status === 'Waiting'){
         statusColor = 'bg-yellow-500 text-white'
     }else if(status === 'Closed'){
-        statusColor = 'bg-red-500 text-red-500/60'
+        statusColor = 'bg-red-500 text-white'
+    }else if(status === 'New'){
+        statusColor = 'bg-green-500 text-white'
+    }else if(status === 'In progress'){
+        statusColor = 'bg-blue-500 text-white'
+    }else if(status === 'Resolved'){
+        statusColor = 'bg-green-500 text-white'
     }
-
 
 
 

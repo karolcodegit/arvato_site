@@ -28,7 +28,7 @@ function Content() {
         toggle={toggle}
         setToggle={setToggle}
       />
-      <main className="w-full min-h-full xl:ml-60 transition-all duration-500 ease-in-out rounded-xl p-6">
+      <main className={`w-full min-h-full ${toggle ? 'xl:ml-20' : 'xl:ml-60'}  transition-all duration-500 ease-in-out rounded-xl p-6`}>
         <div className="flex flex-col">
           <Header toggleSidebar={toggleSidebar} toggle={toggle} />
           <div className="w-full px-6 py-6 mx-auto h-screen">

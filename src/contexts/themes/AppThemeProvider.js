@@ -4,6 +4,12 @@ import { AppThemeContext } from './AppThemeContext'
 const AppThemeProvider = ({children}) => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light') // default theme
   const [loading, setLoading] = useState(true);
+  const[fontSize, setFontSize] = useState('text-base')
+
+  const handleFontSizeChange = (size) => {
+    setFontSize(size)
+  }
+
   const toggleTheme = () => {
     
     setTheme(prevTheme => {
@@ -24,8 +30,10 @@ const AppThemeProvider = ({children}) => {
   }
 
   return (
-    <AppThemeContext.Provider value={{theme, toggleTheme}}>
-      {children}
+    <AppThemeContext.Provider value={{theme, toggleTheme, fontSize, handleFontSizeChange}}>
+      <div className={fontSize}>
+        {children}
+      </div>
     </AppThemeContext.Provider>
   )
 }

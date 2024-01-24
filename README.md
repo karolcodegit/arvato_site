@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Witamy w CodeCraft !
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Przedstawiam Państwu Projekt, który jest realizowany od niedawna. Portal jest skierowany dla magazynów, w celu zminimalizowania liczby zatrudnionych osób, zmniejszenie ilości błędów do minimum.  
 
-## Available Scripts
 
-In the project directory, you can run:
+## Język programowania
 
-### `npm start`
+Portal został stworzony za pomocą React czyli JavaScript. Dodawane jest całe zaplecze backendowe z bazą danych przy pomocy Node.js oraz mangoDB. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Logowanie
 
-### `npm test`
+Zaimplementowane zostało logowanie w celu zabezpieczenia danych oraz wykrycia błędów przez pracownika.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Gotowe moduły
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ - Dodawanie, usuwanie transportu. Możliwość wygenerowania CMR na podstawie danych z formularza. Możliwość zarządzania zarówno Inbound jak i Outbound. 
+ - Drukowanie lokalizacji na postawie tekstu 
+ - Drukowanie QR oraz kodów kreskowych 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## W trakcie 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ - Zgłaszanie błędów IT oraz innym działom. Każde urządzenie będzie posiadało swój odzielny kod QR, który po zeskanowaniu telefonem, przekieruje do strony, która wyświetli komunikat "Czy chcesz zgłosić to urządzenie?". Jeżeli pracownik wcześniej zgłosił już dany problem, to na stronie pojawi się błąd.
+- Tworzenie backendu 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## W przyszłości
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Tworzenie notatek oraz przekazania zmiany, które będą automatycznie będą łączone z innymi działami, zapisywane i wysłane na serwer.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Cel
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Moim celem jest sworzenie programu, który będzie zawierał wszystkie informacje o magazynie. Zmniejszenie ilości narzędzi, z której korzystają pracownicy. Jeden portal, a tak dużo możliwości...
+ 

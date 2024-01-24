@@ -1,7 +1,6 @@
 import React, { useContext, useMemo, useState } from "react";
 import Button from "../../components/Button/Button";
 import Title from "../../components/Common/Title/Title";
-import Input from "../../components/Input/Input";
 import Box from "../../components/Box/Box";
 import { UsersContext } from "../../services/firebase/users";
 import Modal from "../../components/Common/Modal/Modal";
@@ -9,8 +8,11 @@ import Form from "../../components/Form/Form";
 import { addUser } from "../../services/firebase/registerUster";
 import { DepartmentIcon, KeyIcon, PlusIcon, UserIcon } from "../../components/Common/Icons/Icons";
 import Notification from "../../components/Common/Notification/Notification";
-import Table from "../../components/Table/Table";
+
 import StatusCell from "../../components/Common/StatusCell/StatusCell";
+import TextInput from "../../components/Common/TextInput/TextInput";
+import Select from "../../components/Common/Select/Select";
+import Table from "../../components/Common/Table/Table";
 
 const Users = () => {
   const columns = useMemo(
@@ -117,38 +119,34 @@ const Users = () => {
       {showModal && (
         <Modal isOpen={showModal} onClose={closeModal}>
           <Form>
-            <Title tag="h4">New user</Title>
-            <Input
-              type="text"
+            <Title tag="h3">New user</Title>
+            <TextInput
               name="Name"
               icon={UserIcon}
               label="Name"
               onChange={handleInputChange}
             />
-            <Input
-              type="text"
+            <TextInput
               name="Surname"
               icon={UserIcon}
               label="Surname"
               onChange={handleInputChange}
             />
-            <Input
-              type="select"
+            <Select
               name="Department"
               icon={DepartmentIcon}
               label="Department"
               options={departments.map((department) => department.name)}
               onChange={handleInputChange}
             />
-            <Input
-              type="select"
+            <Select
               name="Role"
               // icon={FaTruck}
               label="Group"
               options={roles.map((role) => role.name)}
               onChange={handleInputChange}
             />
-            <Input
+            <TextInput
               type="password"
               name="Password"
               icon={KeyIcon}

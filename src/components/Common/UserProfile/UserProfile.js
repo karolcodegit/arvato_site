@@ -7,9 +7,9 @@ const UserProfile = ({ toggle }) => {
 
   return (
     <>
-    <div
+      <div
         className={`transition-all duration-300 delay-200 ${
-          toggle ? "bg-none" : "bg-gray-300 text-black rounded-2xl p-2 mx-0 my-0"
+          toggle ? "bg-none flex justify-center" : "bg-gray-300 text-black rounded-2xl p-2 mx-0 my-0"
         }`}
       >
         <div className="flex items-center justify-between mx-0 my-0">
@@ -17,7 +17,7 @@ const UserProfile = ({ toggle }) => {
             <img
               src="https://github.com/identicons/jasonlong.png"
               alt="User Avatar"
-              className="w-5 h-5 rounded-full object-cover mx-0 my-0"
+              className={`rounded-full object-cover mx-0 my-0 ${toggle ? "w-10 h-10" : "w-5 h-5"}`}
             />
             {!toggle && userDetails && (
               <div className="flex flex-col text-xxs mx-2">
@@ -28,7 +28,7 @@ const UserProfile = ({ toggle }) => {
           </div>
         </div>
       </div>
-     </>
+    </>
   );
 };
 

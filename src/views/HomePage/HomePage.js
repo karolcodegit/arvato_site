@@ -10,8 +10,9 @@ import { UpdateIcon } from "../../components/Common/Icons/Icons";
 import { FcCamcorderPro } from "react-icons/fc";
 import { FaArrowDown } from "react-icons/fa6";
 import Paragraph from "../../components/Common/Paragraph/Paragraph";
-
-
+import CardUpdate from "../../components/CardUpdate/CardUpdate";
+import Inbox from "../../components/Common/Inbox/Inbox";
+import EventCard from "../../components/Common/CardEvent/CardEvent";
 
 const card = [
   {
@@ -56,7 +57,9 @@ const HomePage = () => {
     <div className="text-white transition-all p-8 flex-1 ">
       <div className="flex flex-wrap w-full justify-between">
         <div>
-          <Title tag="h2">Dashboard</Title>
+          <Title tag="h2" white>
+            Dashboard
+          </Title>
           {/* <span className='font-light'>Welcome Karol </span> */}
         </div>
         <div className="flex items-center">
@@ -66,74 +69,24 @@ const HomePage = () => {
       </div>
       <div className="border border-blue-gray-500 w-full my-5 "></div>
 
-      <div className="w-full grow-0 basis-full">
-        <div className="flex my-10 box">
-          {card.map((item) => (
-            
-            <div className="basis-1/4 grow-0 max-w-[25%] mr-7">
-            <div className="bg-white text-gray-800 transition-shadow rounded-xl overflow-hidden pt-7 px-7 pb-14">
-                <div className="flex items-center">
-                  <div className="flex relative items-center justify-center shrink-0 leading-4 rounded-full overflow-hidden text-sm font-bold w-12 h-12 bg-cyan-950">
-                    <FcCamcorderPro className="w-6 h-6"/>
-                  </div>
-                  <div className="ml-4 text-gray-500 font-bold">{item.title}</div>
-                </div>
-                <div className="flex items-center justify-center pt-4 pb-5">
-                    <FaArrowDown className='text-red-600 w-6 h-6'/>
-                    <Title tag="h1" >{item.number}</Title>
-                </div>
-                <div className="text-sm text-gray-600 text-center ">
-                    <Paragraph>{item.percent}</Paragraph>
-                </div>
-            </div>
-        </div>
-          ))}
+      <div className="flex flex-col md:flex-row">
+        <div></div>
+      </div>
 
-          
-         
+      <div className="flex flex-col xl:flex-row w-full gap-6">
+        <div className="xl:w-2/5">
+          <CardUpdate />
+        </div>
+        <div className="xl:w-2/5">
+          <Inbox />
+        </div>
+        <div className="xl:w-1/8">
+          <EventCard />
         </div>
       </div>
 
-
-        {/* <div className="flex flex-wrap w-full ">
-          <div className="grid grid-cols-2 gap-3 ">
-            {card.map((item) => (
-              <Card
-                title={item.title}
-                number={item.number}
-                percent={item.percent}
-                update={item.update}
-                icon={item.icon}
-              />
-            ))}
-          </div>
-          <div>
-
-          </div>
-        </div> */}
-        <Footer />
+      <Footer />
     </div>
-    // <div>
-
-    //   <div className="flex flex-wrap mt-6 -mx-3">
-    //     <div className="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
-    //       <SalesView />
-    //     </div>
-    //     <div className="w-full max-w-full px-3 lg:w-5/12 lg:flex-none">
-    //       <SalesView />
-    //     </div>
-    //   </div>
-
-    //   <div className="flex flex-wrap mt-6 -mx-3">
-    //     <div className="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-7/12 lg:flex-none">
-    //       <SalesByCountry />
-    //     </div>
-    //     <div className="w-full max-w-full px-3 mt-0 lg:w-5/12 lg:flex-none">
-    //       <Categories />
-    //     </div>
-    //   </div>
-    //   <Footer />
-    // </div>
   );
 };
 

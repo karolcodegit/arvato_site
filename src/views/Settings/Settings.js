@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AppearanceSettings from '../../components/Setting/AppearanceSettings';
 import PrinterSettings from '../../components/Setting/PrinterSettings';
 import CmrSettings from '../../components/Setting/CmrSettings';
+import ConfigSettings from '../../components/Setting/ConfigSettings';
 import Box from '../../components/Box/Box';
 import Other from '../../components/Setting/Other';
 
@@ -10,20 +11,20 @@ const Setting = () => {
   const [activeSection, setActiveSection] = useState("appearance");
   const renderSection = () => {
     switch (activeSection) {
-      case "appearance":
-        return <AppearanceSettings />;
       case "printer":
         return <PrinterSettings />;
       case "cmr":
         return <CmrSettings />;
+      case "config":
+          return <ConfigSettings />;
       case "other":
         return <Other />;
     }
   };
   const sections = [
-    {id: 'appearance', name: 'Appearance'},
     {id: 'printer', name: 'Printer'},
     {id: 'cmr', name: 'Dane CMR'},
+    {id: 'config', name: 'Config'},
     {id: 'other', name: 'Other'}
   ]
   return (
